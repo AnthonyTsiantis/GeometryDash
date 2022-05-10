@@ -2,6 +2,7 @@ package Objects.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -23,9 +24,9 @@ public class Player extends GameEntity {
         checkUserInput();
     }
 
-    @Override
-    public void render(SpriteBatch batch) {
+    public void render(OrthographicCamera camera, SpriteBatch batch) {
 
+        super.render(camera, batch);
     }
 
     private void checkUserInput() {

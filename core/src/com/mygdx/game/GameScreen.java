@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import Objects.Player.Player;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -15,11 +16,10 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class GameScreen extends ScreenAdapter {
     private OrthographicCamera camera;
-    private SpriteBatch batch;
+    SpriteBatch batch;
     private World world;
     private Box2DDebugRenderer box2DDebugRenderer;
     public static final float PPM = 32.0f;
-
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
 
@@ -36,6 +36,7 @@ public class GameScreen extends ScreenAdapter {
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
 
     }
+
 
     private void update() {
         world.step(1/60f, 6, 2);
@@ -70,18 +71,20 @@ public class GameScreen extends ScreenAdapter {
 
         orthogonalTiledMapRenderer.render();
 
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
         // Render all the objects
-
 
 
         batch.end();
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
     }
 
+
     public World getWorld() {
         return world;
     }
+
 
     public void setPlayer(Player player) {
         this.player = player;

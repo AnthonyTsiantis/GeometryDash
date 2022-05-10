@@ -41,6 +41,10 @@ task dist(type: Jar) {
     with jar
 }
 
+dependencies {
+    implementation 'com.harium.etyl:etyl-gdx-base-backend:1.10.0'
+}
+
 
 dist.dependsOn classes
 
