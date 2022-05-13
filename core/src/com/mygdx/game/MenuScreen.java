@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 
+import java.util.Arrays;
+
 public class MenuScreen implements Screen {
 
     Boot game;
@@ -29,11 +31,11 @@ public class MenuScreen implements Screen {
 
     public MenuScreen(Boot game) {
         this.game = game;
-        playButtonActive =  new Texture("LEVELS0.png");
-        exitButtonActive = new Texture("QUIT0.png");
-        playButtonInactive = new Texture("levels1.png");
-        exitButtonInactive = new Texture("quit1.png");
-        menuBackground = new Texture("SMCSJUMPER!0.png");
+        playButtonActive =  new Texture("Maps/Menu/Level_Button_On.png");
+        exitButtonActive = new Texture("Maps/Menu/Quit_Button_On.png");
+        playButtonInactive = new Texture("Maps/Menu/Level_Button_Off.png");
+        exitButtonInactive = new Texture("Maps/Menu/Quit_Button_Off.png");
+        menuBackground = new Texture("Maps/Menu/Title_background.png");
     }
 
     @Override
