@@ -17,21 +17,25 @@ import com.badlogic.gdx.physics.box2d.Shape;
 
 import static com.mygdx.game.GameScreen.PPM;
 
+// This class is utilized to incorporate the game map
 public class TileMapHelper {
+    // Instantiate class variables
     private TiledMap tiledMap;
     private GameScreen gameScreen;
 
+    // Constructor initializes game screen
     public TileMapHelper(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
     }
 
+    // Setupmap method used to create tiled map
     public OrthogonalTiledMapRenderer setupMap() {
         tiledMap = new TmxMapLoader().load("Maps/Level 1/Level1.tmx");
         parseMapObjects(tiledMap.getLayers().get("Objects").getObjects());
         return new OrthogonalTiledMapRenderer(tiledMap);
-
     }
 
+    // This method is used to parse object from the tiled map and set player object
     private void parseMapObjects(MapObjects mapObjects) {
         for (MapObject mapObject : mapObjects) {
             if (mapObject instanceof PolygonMapObject) {
@@ -57,19 +61,19 @@ public class TileMapHelper {
         }
     }
 
+    // Create a body for each object in map
     private void createStaticBody(PolygonMapObject polygonMapObject) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = gameScreen.getWorld().createBody(bodyDef);
         Shape shape = createPolygonShape(polygonMapObject);
         body.createFixture(shape, 1000);
-
-
         shape.dispose();
     }
 
+    // Create player object with polygon shape and return shape
     private Shape createPolygonShape(PolygonMapObject polygonMapObject) {
-
+        // Get player vertices and transform
         float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
         int len = vertices.length / 2;
         Vector2[] worldVertices = new Vector2[len];
@@ -78,6 +82,7 @@ public class TileMapHelper {
             worldVertices[i] = current;
         }
 
+        // Apply transformed vertices to shape and return
         PolygonShape shape = new PolygonShape();
         shape.set(worldVertices);
         return shape;

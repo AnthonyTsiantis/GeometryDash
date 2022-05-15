@@ -1,22 +1,22 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+// Scrolling background class determines the speed of the scrolling background and what the game does when the game is over
 public class ScrollingBackground {
-
+    // Initialize class variables
     public static final int DEFAULT_SPEED = 80;
     public static final int ACCELERATION = 50;
     public static final int GOAL_REACH_ACCELERATION = 200;
-
     Texture image;
     float y1, y2;
-    int speed;//In pixels / second
+    int speed; //In pixels / second
     int goalSpeed;
     float imageScale;
     boolean speedFixed;
 
+    //
     public ScrollingBackground () {
         image = new Texture("Maps/Level 1/night.png");
 
@@ -67,4 +67,3 @@ public class ScrollingBackground {
     }
 
 }
-
