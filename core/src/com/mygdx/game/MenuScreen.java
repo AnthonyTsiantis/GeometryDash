@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 
 public class MenuScreen implements Screen {
-    // Initilize Class Variables
+    // Initialize Class Variables
     Boot game;
     Game camera;
 
@@ -16,9 +16,15 @@ public class MenuScreen implements Screen {
     Texture exitButtonActive;
     Texture exitButtonInactive;
     Texture menuBackground;
+    Texture helpButtonActive;
+    Texture helpButtonInactive;
+    Texture skinsButtonActive;
+    Texture skinsButtonInactive;
 
     private static final int BUTTON_WIDTH = 300;
     private static final int BUTTON_HEIGHT = 150;
+    private static final int SIDE_BUTTON_WIDTH = 200;
+    private static final int SIDE_BUTTON_HEIGHT = 100;
     private static int playButtonY, exitButtonY, midWidth, midHeight, midButtonWidth, midButtonHeight;
 
     // Constructor class populates most class variables
@@ -28,7 +34,11 @@ public class MenuScreen implements Screen {
         exitButtonActive = new Texture("Maps/Menu/Quit_Button_On.png");
         playButtonInactive = new Texture("Maps/Menu/Play_Button_Off.png");
         exitButtonInactive = new Texture("Maps/Menu/Quit_Button_Off.png");
-        menuBackground = new Texture("Maps/Menu/Title_background.png");
+        menuBackground = new Texture("Maps/Menu/Title_Background.png");
+        helpButtonActive = new Texture("Maps/Menu/Help_Button_On.png");
+        helpButtonInactive = new Texture("Maps/Menu/Help_Button_Off.png");
+        skinsButtonActive = new Texture("Maps/Menu/Skins_Button_On.png");
+        skinsButtonInactive = new Texture("Maps/Menu/Skins_Button_Off.png");
         midWidth = game.widthScreen / 2;
         midHeight = game.heightScreen / 2;
         playButtonY = midHeight - 50;
@@ -39,6 +49,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
+
     }
 
     // Render method
@@ -52,12 +63,22 @@ public class MenuScreen implements Screen {
         game.batch.begin();
         game.batch.draw(menuBackground, 0, 0, game.widthScreen, game.heightScreen);
 
+
         // Horizontal adjustment for mainButtons, left side of play button
         int xButtonOffset = midWidth - midButtonWidth;
 
         // Vertical offsets for each button
         int yPlayButtonOffset = playButtonY - 50;
         int yExitButtonOffset = exitButtonY + midHeight - midButtonHeight + 65;
+
+
+        // Vertical offset for side buttons
+        int ySideButtonsOffset = midHeight - 115;
+        int verticalSideButtonBound = ySideButtonsOffset + 135;
+
+        // Horizontal offset for side button
+        int xSkinButtonOffset = midWidth - 400;
+        int xHelpButtonOffset = midWidth + 200;
 
         // Get the mouse X and Y coordinates
         int mouseX = Gdx.input.getX();
@@ -76,7 +97,7 @@ public class MenuScreen implements Screen {
             game.batch.draw(playButtonInactive, xButtonOffset, playButtonY, BUTTON_WIDTH, BUTTON_HEIGHT);
         }
 
-        // If mouse is within exit button, display grey button
+        // If mouse is within exit button, display yellow button
         if ((mouseX < xButtonOffset + BUTTON_WIDTH) && (mouseX > xButtonOffset) && (mouseY > yExitButtonOffset) && (mouseY < (BUTTON_HEIGHT + yExitButtonOffset))) {
             game.batch.draw(exitButtonActive, xButtonOffset, exitButtonY, BUTTON_WIDTH, BUTTON_HEIGHT);
             // If button is clicked, end the application
@@ -87,6 +108,34 @@ public class MenuScreen implements Screen {
         // If mouse is outside exit button, display grey button
         } else {
             game.batch.draw(exitButtonInactive, xButtonOffset, exitButtonY, BUTTON_WIDTH, BUTTON_HEIGHT);
+        }
+
+        // If mouse is within help button, display yellow button
+        if((mouseX > xHelpButtonOffset) && (mouseX < xHelpButtonOffset + SIDE_BUTTON_WIDTH) && (mouseY > verticalSideButtonBound) && (mouseY < verticalSideButtonBound + SIDE_BUTTON_HEIGHT)) {
+            game.batch.draw(helpButtonActive, xHelpButtonOffset, ySideButtonsOffset, SIDE_BUTTON_WIDTH, SIDE_BUTTON_HEIGHT);
+            // Change menu to Help menu once clicked
+            if (Gdx.input.isTouched()) {
+                this.dispose();
+                game.setScreen(new HelpMenu(game));
+            }
+
+        // If mouse is outside, display grey
+        } else {
+            game.batch.draw(helpButtonInactive, xHelpButtonOffset, ySideButtonsOffset, SIDE_BUTTON_WIDTH, SIDE_BUTTON_HEIGHT);
+        }
+
+        // If mouse is within skins button, display yellow
+        if ((mouseX > xSkinButtonOffset) && (mouseX < xSkinButtonOffset + SIDE_BUTTON_WIDTH) && (mouseY > verticalSideButtonBound) && (mouseY < verticalSideButtonBound + SIDE_BUTTON_HEIGHT)) {
+            game.batch.draw(skinsButtonActive, xSkinButtonOffset, ySideButtonsOffset, SIDE_BUTTON_WIDTH, SIDE_BUTTON_HEIGHT);
+            //Display Skins menu
+            if (Gdx.input.isTouched()) {
+                this.dispose();
+                game.setScreen(new SkinsMenu(game));
+            }
+
+        // If mouse is outside, display grey
+        } else {
+            game.batch.draw(skinsButtonInactive, xSkinButtonOffset, ySideButtonsOffset, SIDE_BUTTON_WIDTH, SIDE_BUTTON_HEIGHT);
         }
 
         // End batch
@@ -115,6 +164,5 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
     }
 }

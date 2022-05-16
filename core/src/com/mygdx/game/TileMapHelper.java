@@ -28,7 +28,7 @@ public class TileMapHelper {
         this.gameScreen = gameScreen;
     }
 
-    // Setupmap method used to create tiled map
+    // Setup map method used to create tiled map
     public OrthogonalTiledMapRenderer setupMap() {
         tiledMap = new TmxMapLoader().load("Maps/Level 1/Level1.tmx");
         parseMapObjects(tiledMap.getLayers().get("Objects").getObjects());
