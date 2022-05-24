@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 public class MenuScreen implements Screen {
     // Initialize Class Variables
     Boot game;
-    Game camera;
 
     Texture playButtonActive;
     Texture playButtonInactive;
@@ -92,6 +91,7 @@ public class MenuScreen implements Screen {
                 this.dispose();
                 game.setScreen(new GameScreen(game.camera));
             }
+
         // If outside button display grey button
         } else {
             game.batch.draw(playButtonInactive, xButtonOffset, playButtonY, BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -140,7 +140,6 @@ public class MenuScreen implements Screen {
 
         // End batch
         game.batch.end();
-
     }
 
     @Override

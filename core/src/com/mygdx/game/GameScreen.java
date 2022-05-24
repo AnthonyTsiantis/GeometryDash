@@ -6,6 +6,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -27,16 +29,19 @@ public class GameScreen extends ScreenAdapter {
 
     // Game objects
     private Player player;
+    public Sprite playerSkin;
+
 
     // GameScreen constructor creates a new game with an OrthographicCamera as a parameter
     public GameScreen(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
-        this.world = new World(new Vector2(500, -65f), false); // y value is gravity
+        this.playerSkin = new Sprite(new Texture("Maps/Level 1/Character.png"));
+        this.playerSkin.setPosition(64f, 64f);
+        this.world = new World(new Vector2(500f, -65f), false); // y value is gravity
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
-
     }
 
     // Update method updates the game every frame (1/60)
@@ -77,16 +82,16 @@ public class GameScreen extends ScreenAdapter {
         // render map
         orthogonalTiledMapRenderer.render();
 
+        // Set skin position the same as player position
+        this.playerSkin.setPosition((this.player.xPos) - 32, (this.player.yPos) - 32);
+
         // set camera
         batch.setProjectionMatrix(camera.combined);
         // begin batch
         batch.begin();
-        //TODO
-        // Render all objects
+        batch.draw(this.playerSkin, this.playerSkin.getX(), this.playerSkin.getY());
         batch.end();
         // Render World
-        //TODO
-        // CHANGE DEBUG IF WANT TO RENDER WITHOUT BOUNDARIES
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
     }
 

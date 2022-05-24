@@ -14,6 +14,7 @@ import static com.mygdx.game.GameScreen.PPM;
 public class Player extends GameEntity {
     // Initialize counter to 0, counter keeps track of amount of consecutive jumps
     private int counter = 0;
+    public float xPos, yPos;
 
     // Player Constructor class creates player object
     public Player(float width, float height, Body body) {
@@ -24,8 +25,8 @@ public class Player extends GameEntity {
     // Update method updates player's position and checks for input
     @Override
     public void update() {
-        x = body.getPosition().x * PPM;
-        y = body.getPosition().y * PPM;
+        this.xPos = body.getPosition().x * PPM;
+        this.yPos = body.getPosition().y * PPM;
         checkUserInput();
     }
 
