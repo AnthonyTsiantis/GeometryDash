@@ -12,8 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 
 import java.io.IOException;
 
@@ -28,6 +27,7 @@ public class GameScreen extends ScreenAdapter {
     public static final float PPM = 32.0f;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
+    private ContactListener contactListener;
 
     // Game objects
     private Player player;
@@ -43,6 +43,8 @@ public class GameScreen extends ScreenAdapter {
         this.playerSkin = new Sprite(new Texture("Maps/Level 1/Character.png"));
         this.playerSkin.setPosition(64f, 64f);
         this.world = new World(new Vector2(500f, -65f), false); // y value is gravity
+        this.contactListener = new ContactListener(this.game);
+        this.world.setContactListener(contactListener);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
@@ -51,11 +53,6 @@ public class GameScreen extends ScreenAdapter {
 
     // Update method updates the game every frame (1/60)
     private void update() throws IOException {
-        boolean collision = this.checkCollision();
-        if (collision) {
-            this.gameOver();
-        }
-
         world.step(1/60f, 6, 2);
 
         cameraUpdate();
@@ -69,16 +66,6 @@ public class GameScreen extends ScreenAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-    }
-
-    // TODO
-    // Check for collision and end game if true
-    private boolean checkCollision(){
-        // TODO If collision occured, check to see if player is on top of cube using relative square pos (player.y > cube.y)
-        if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
-            return true;
-        }
-        return false;
     }
 
     public void gameOver() throws IOException {
@@ -123,6 +110,8 @@ public class GameScreen extends ScreenAdapter {
         batch.draw(this.playerSkin, this.playerSkin.getX(), this.playerSkin.getY());
         batch.end();
         // Render World
+
+        // TODO Comment this out to get rid of map boundaries
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
         // Update Game Score

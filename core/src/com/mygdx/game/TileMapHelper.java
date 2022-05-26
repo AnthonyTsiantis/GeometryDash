@@ -10,10 +10,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.physics.box2d.*;
 
 import static com.mygdx.game.GameScreen.PPM;
 
@@ -22,6 +19,13 @@ public class TileMapHelper {
     // Instantiate class variables
     private TiledMap tiledMap;
     private GameScreen gameScreen;
+
+    // Constants for collision detection (Must be in powers of 2)
+    private final short BIT_PLAYER = 1;
+    private final short BIT_BOX = 2;
+    private final short BIT_TRIANGLE = 4;
+    private final short BIT_GROUND = 8;
+
 
     // Constructor initializes game screen
     public TileMapHelper(GameScreen gameScreen) {
@@ -67,7 +71,29 @@ public class TileMapHelper {
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = gameScreen.getWorld().createBody(bodyDef);
         Shape shape = createPolygonShape(polygonMapObject);
-        body.createFixture(shape, 1000);
+
+        String name = polygonMapObject.getName();
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1000f;
+
+        if (name != null) {
+            switch (name) {
+                case "triangle":
+                    fixtureDef.filter.categoryBits = BIT_TRIANGLE; // It is a triangle
+                    break;
+                case "box":
+                    fixtureDef.filter.categoryBits = BIT_BOX; // It is a box
+
+                    break;
+                case "ground":
+                    fixtureDef.filter.categoryBits = BIT_GROUND; // It is the ground
+                    break;
+            }
+        }
+
+        fixtureDef.filter.maskBits = BIT_PLAYER; // It can collide with player
+        body.createFixture(fixtureDef);
         shape.dispose();
     }
 

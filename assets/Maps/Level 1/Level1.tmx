@@ -7,52 +7,52 @@
   </data>
  </layer>
  <objectgroup id="4" name="Objects">
-  <object id="1" x="640" y="448">
+  <object id="1" name="box" x="640" y="448">
    <polygon points="0,0 64,0 64,64 0,64 0,0"/>
   </object>
-  <object id="2" x="960" y="448">
+  <object id="2" name="box" x="960" y="448">
    <polygon points="0,0 64,0 64,64 0,64 0,0"/>
   </object>
-  <object id="3" x="1280" y="448">
+  <object id="3" name="box" x="1280" y="448">
    <polygon points="0,0 64,0 64,64 0,64"/>
   </object>
-  <object id="4" x="1600" y="512">
+  <object id="4" name="triangle" x="1600" y="512">
    <polygon points="0,0 30.2144,-62.9849 64,0"/>
   </object>
-  <object id="5" x="1984" y="512">
+  <object id="5" name="triangle" x="1984" y="512">
    <polygon points="0,0 64,0 30.7159,-64.1635"/>
   </object>
-  <object id="6" x="2368" y="512">
+  <object id="6" name="triangle" x="2368" y="512">
    <polygon points="0,0 64,0 30.6897,-64.1274"/>
   </object>
-  <object id="8" x="2816" y="512">
+  <object id="8" name="triangle" x="2816" y="512">
    <polygon points="0,0 64,0 30.6251,-63.9586"/>
   </object>
-  <object id="10" x="3264" y="512">
+  <object id="10" name="triangle" x="3264" y="512">
    <polygon points="0,0 64,0 31.2063,-63.96"/>
   </object>
   <object id="11" x="3584" y="512">
    <polygon points="0,0 0,-64 64,-64 64,0"/>
   </object>
-  <object id="12" x="3968" y="512">
+  <object id="12" name="triangle" x="3968" y="512">
    <polygon points="0,0 64,0 30.4781,-64.1547"/>
   </object>
-  <object id="19" x="4736" y="512">
+  <object id="19" name="triangle" x="4736" y="512">
    <polygon points="0,0 64,0 30.8976,-63.9942"/>
   </object>
-  <object id="20" x="5120" y="512">
+  <object id="20" name="triangle" x="5120" y="512">
    <polygon points="0,0 64,0 30.5044,-64.1477"/>
   </object>
   <object id="21" x="5440" y="512">
    <polygon points="0,0 64,0 64,-64 0,-64"/>
   </object>
-  <object id="22" x="5760" y="512">
+  <object id="22" name="triangle" x="5760" y="512">
    <polygon points="0,0 64,0 30.6321,-63.9522"/>
   </object>
-  <object id="23" x="6016" y="512">
+  <object id="23" name="triangle" x="6016" y="512">
    <polygon points="0,0 64,0 31.0527,-63.9753"/>
   </object>
-  <object id="24" x="0" y="512">
+  <object id="24" name="ground" x="0" y="512">
    <polygon points="0,0 0,128 6400,128 6400,0"/>
   </object>
   <object id="25" x="2688" y="448">
