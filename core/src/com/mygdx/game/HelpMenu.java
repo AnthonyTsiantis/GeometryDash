@@ -54,10 +54,6 @@ public class HelpMenu implements Screen {
         } else {
             game.batch.draw(backButtonInactive, backButtonHorizontalOffset, backButtonVerticalOffset, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
         }
-
-
-
-
         game.batch.end();
     }
 

@@ -38,7 +38,6 @@ public class TileMapHelper {
     // This method is used to parse object from the tiled map and set player object
     private void parseMapObjects(MapObjects mapObjects) {
         for (MapObject mapObject : mapObjects) {
-            System.out.println(mapObject);
             if (mapObject instanceof PolygonMapObject) {
                 createStaticBody((PolygonMapObject) mapObject);
             }

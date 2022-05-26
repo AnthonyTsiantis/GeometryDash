@@ -1,26 +1,36 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
-public class SkinsMenu implements Screen {
-    Boot game;
+import java.io.IOException;
 
-    Texture skinsMenuBackground;
+public class GameOver extends ScreenAdapter {
+    private Boot game;
+    Texture gameOverBackground;
     Texture backButtonActive;
     Texture backButtonInactive;
-
     private static final int BACK_BUTTON_WIDTH = 150;
     private static final int BACK_BUTTON_HEIGHT = 75;
 
-    public SkinsMenu(Boot game) {
+
+    public GameOver(Boot game) throws IOException {
         this.game = game;
-        skinsMenuBackground = new Texture("Maps/Menu/background.jpeg"); // TODO Wait for adam to finish
+        gameOverBackground = new Texture("Maps/Menu/GameOver.png");
         backButtonActive = new Texture("Maps/Menu/Back_Button_On.png");
         backButtonInactive = new Texture("Maps/Menu/Back_Button_Off.png");
+        if(game.currentScore > game.highScore) {
+            game.highScore = game.currentScore;
+            game.writeHighScore();
+        }
     }
+
+
     @Override
     public void show() {
 
@@ -29,12 +39,12 @@ public class SkinsMenu implements Screen {
     @Override
     public void render(float delta) {
         // Clear the screen
-        Gdx.gl.glClearColor(0.3f, 0.0f, 0.9f, 1f);
+        Gdx.gl.glClearColor(0f, 0.0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Create batch and draw to it
         game.batch.begin();
-        game.batch.draw(skinsMenuBackground, 0, 0, game.widthScreen, game.heightScreen);
+        game.batch.draw(gameOverBackground, 0, 0, game.widthScreen, game.heightScreen);
 
         int backButtonVerticalOffset = 25;
         int backButtonHorizontalOffset = 25;
@@ -54,6 +64,10 @@ public class SkinsMenu implements Screen {
         } else {
             game.batch.draw(backButtonInactive, backButtonHorizontalOffset, backButtonVerticalOffset, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
         }
+
+        game.font.draw(game.batch, String.valueOf(game.levelNum), 925, 425);
+        game.font.draw(game.batch, String.valueOf(game.currentScore), 925, 325);
+        game.font.draw(game.batch, String.valueOf(game.highScore), 925, 225);
         game.batch.end();
     }
 

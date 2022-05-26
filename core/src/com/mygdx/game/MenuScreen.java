@@ -6,6 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class MenuScreen implements Screen {
     // Initialize Class Variables
     Boot game;
@@ -89,7 +92,7 @@ public class MenuScreen implements Screen {
             // If the button is clicked, start the game
             if (Gdx.input.isTouched()) {
                 this.dispose();
-                game.setScreen(new GameScreen(game.camera));
+                game.setScreen(new GameScreen(game, game.camera));
             }
 
         // If outside button display grey button
@@ -102,6 +105,12 @@ public class MenuScreen implements Screen {
             game.batch.draw(exitButtonActive, xButtonOffset, exitButtonY, BUTTON_WIDTH, BUTTON_HEIGHT);
             // If button is clicked, end the application
             if (Gdx.input.isTouched()) {
+                try {
+                    game.writeHighScore();
+                } catch (IOException e) {
+                    System.out.println("Trouble writing highscore...");
+                    e.printStackTrace();
+                }
                 Gdx.app.exit();
             }
 

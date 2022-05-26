@@ -15,12 +15,14 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
+import java.io.IOException;
+
 // Game screen class is used to create a game screen
 
 public class GameScreen extends ScreenAdapter {
     // Initialize the game variables
     private OrthographicCamera camera;
-    SpriteBatch batch;
+    public SpriteBatch batch;
     private World world;
     private Box2DDebugRenderer box2DDebugRenderer;
     public static final float PPM = 32.0f;
@@ -30,10 +32,12 @@ public class GameScreen extends ScreenAdapter {
     // Game objects
     private Player player;
     public Sprite playerSkin;
+    private Boot game;
 
 
     // GameScreen constructor creates a new game with an OrthographicCamera as a parameter
-    public GameScreen(OrthographicCamera camera) {
+    public GameScreen(Boot game, OrthographicCamera camera) {
+        this.game = game;
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.playerSkin = new Sprite(new Texture("Maps/Level 1/Character.png"));
@@ -42,10 +46,16 @@ public class GameScreen extends ScreenAdapter {
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
+        game.currentScore = 0;
     }
 
     // Update method updates the game every frame (1/60)
-    private void update() {
+    private void update() throws IOException {
+        boolean collision = this.checkCollision();
+        if (collision) {
+            this.gameOver();
+        }
+
         world.step(1/60f, 6, 2);
 
         cameraUpdate();
@@ -61,6 +71,23 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    // TODO
+    // Check for collision and end game if true
+    private boolean checkCollision(){
+        // TODO If collision occured, check to see if player is on top of cube using relative square pos (player.y > cube.y)
+        if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
+            return true;
+        }
+        return false;
+    }
+
+    public void gameOver() throws IOException {
+        // TODO
+        // Dispose of all game attributes
+        // Change screen
+        game.setScreen(new GameOver(game));
+    }
+
     // Camera Update method updates camera position based on game data
     private void cameraUpdate() {
         Vector3 position = camera.position;
@@ -74,7 +101,11 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         // Call update method
-        this.update();
+        try {
+            this.update();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // Clear screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -93,6 +124,9 @@ public class GameScreen extends ScreenAdapter {
         batch.end();
         // Render World
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+
+        // Update Game Score
+        game.currentScore = ((int) this.player.xPos) / 10;
     }
 
     // getWorld method returns this class' world
