@@ -47,6 +47,7 @@ public class Player extends GameEntity {
             counter++;
             long id = this.sound.play(0.05f);
             this.sound.setLooping(id, false);
+
         }
 
         // When the user lands, reset the counter
