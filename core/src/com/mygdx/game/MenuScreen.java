@@ -32,15 +32,15 @@ public class MenuScreen implements Screen {
     // Constructor class populates most class variables
     public MenuScreen(Boot game) {
         this.game = game;
-        playButtonActive =  new Texture("Maps/Menu/Play_Button_On.png");
-        exitButtonActive = new Texture("Maps/Menu/Quit_Button_On.png");
-        playButtonInactive = new Texture("Maps/Menu/Play_Button_Off.png");
-        exitButtonInactive = new Texture("Maps/Menu/Quit_Button_Off.png");
-        menuBackground = new Texture("Maps/Menu/Title_Background.png");
-        helpButtonActive = new Texture("Maps/Menu/Help_Button_On.png");
-        helpButtonInactive = new Texture("Maps/Menu/Help_Button_Off.png");
-        skinsButtonActive = new Texture("Maps/Menu/Skins_Button_On.png");
-        skinsButtonInactive = new Texture("Maps/Menu/Skins_Button_Off.png");
+        playButtonActive =  new Texture("Menu/Play_Button_On.png");
+        exitButtonActive = new Texture("Menu/Quit_Button_On.png");
+        playButtonInactive = new Texture("Menu/Play_Button_Off.png");
+        exitButtonInactive = new Texture("Menu/Quit_Button_Off.png");
+        menuBackground = new Texture("Menu/Title_Background.png");
+        helpButtonActive = new Texture("Menu/Help_Button_On.png");
+        helpButtonInactive = new Texture("Menu/Help_Button_Off.png");
+        skinsButtonActive = new Texture("Menu/Skins_Button_On.png");
+        skinsButtonInactive = new Texture("Menu/Skins_Button_Off.png");
         midWidth = game.widthScreen / 2;
         midHeight = game.heightScreen / 2;
         playButtonY = midHeight - 50;

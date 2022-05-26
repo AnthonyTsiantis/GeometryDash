@@ -17,9 +17,9 @@ public class HelpMenu implements Screen {
 
     public HelpMenu(Boot game) {
         this.game = game;
-        helpMenuBackground = new Texture("Maps/Menu/Help_Menu_Background.png");
-        backButtonActive = new Texture("Maps/Menu/Back_Button_On.png");
-        backButtonInactive = new Texture("Maps/Menu/Back_Button_Off.png");
+        helpMenuBackground = new Texture("Menu/Help_Menu_Background.png");
+        backButtonActive = new Texture("Menu/Back_Button_On.png");
+        backButtonInactive = new Texture("Menu/Back_Button_Off.png");
     }
 
     @Override

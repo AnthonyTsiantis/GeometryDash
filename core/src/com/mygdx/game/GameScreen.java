@@ -40,7 +40,7 @@ public class GameScreen extends ScreenAdapter {
         this.game = game;
         this.camera = camera;
         this.batch = new SpriteBatch();
-        this.playerSkin = new Sprite(new Texture("Maps/Level 1/Character.png"));
+        this.playerSkin = new Sprite(new Texture("Skins/Character1.png"));
         this.playerSkin.setPosition(64f, 64f);
         this.world = new World(new Vector2(500f, -65f), false); // y value is gravity
         this.contactListener = new ContactListener(this.game);

@@ -17,9 +17,9 @@ public class SkinsMenu implements Screen {
 
     public SkinsMenu(Boot game) {
         this.game = game;
-        skinsMenuBackground = new Texture("Maps/Menu/background.jpeg"); // TODO Wait for adam to finish
-        backButtonActive = new Texture("Maps/Menu/Back_Button_On.png");
-        backButtonInactive = new Texture("Maps/Menu/Back_Button_Off.png");
+        skinsMenuBackground = new Texture("Menu/background.jpeg"); // TODO Wait for adam to finish
+        backButtonActive = new Texture("Menu/Back_Button_On.png");
+        backButtonInactive = new Texture("Menu/Back_Button_Off.png");
     }
     @Override
     public void show() {

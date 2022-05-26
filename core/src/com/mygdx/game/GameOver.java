@@ -2,11 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import java.io.IOException;
 
@@ -21,9 +18,9 @@ public class GameOver extends ScreenAdapter {
 
     public GameOver(Boot game) throws IOException {
         this.game = game;
-        gameOverBackground = new Texture("Maps/Menu/GameOver.png");
-        backButtonActive = new Texture("Maps/Menu/Back_Button_On.png");
-        backButtonInactive = new Texture("Maps/Menu/Back_Button_Off.png");
+        gameOverBackground = new Texture("FlashScreens/GameOver.png");
+        backButtonActive = new Texture("Menu/Back_Button_On.png");
+        backButtonInactive = new Texture("Menu/Back_Button_Off.png");
         if(game.currentScore > game.highScore) {
             game.highScore = game.currentScore;
             game.writeHighScore();
