@@ -2,6 +2,7 @@ package Objects.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -15,11 +16,13 @@ public class Player extends GameEntity {
     // Initialize counter to 0, counter keeps track of amount of consecutive jumps
     private int counter = 0;
     public float xPos, yPos;
+    private Sound sound;
 
     // Player Constructor class creates player object
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 4f;
+        this.sound = Gdx.audio.newSound(Gdx.files.internal("audio/JumpSFX.wav"));
     }
 
     // Update method updates player's position and checks for input
@@ -42,6 +45,8 @@ public class Player extends GameEntity {
             float force = body.getMass() * 25;
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
             counter++;
+            long id = this.sound.play(0.05f);
+            this.sound.setLooping(id, false);
         }
 
         // When the user lands, reset the counter
@@ -51,5 +56,9 @@ public class Player extends GameEntity {
 
         // Set linear velocity
         body.setLinearVelocity(0, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
+    }
+
+    private void dispose() {
+        this.sound.dispose();
     }
 }

@@ -1,7 +1,6 @@
 package com.mygdx.game;
 import com.badlogic.gdx.physics.box2d.*;
 import java.io.IOException;
-import java.util.Objects;
 
 import static com.mygdx.game.GameScreen.PPM;
 
