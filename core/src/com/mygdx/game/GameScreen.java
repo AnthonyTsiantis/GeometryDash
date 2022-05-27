@@ -4,6 +4,7 @@ import Objects.Player.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -43,10 +44,10 @@ public class GameScreen extends ScreenAdapter {
         this.playerSkin = new Sprite(new Texture("Skins/Character1.png"));
         this.playerSkin.setPosition(64f, 64f);
         this.world = new World(new Vector2(500f, -65f), false); // y value is gravity
-        this.contactListener = new ContactListener(this.game);
+        this.contactListener = new ContactListener(this.game, this);
         this.world.setContactListener(contactListener);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
-        this.tileMapHelper = new TileMapHelper(this);
+        this.tileMapHelper = new TileMapHelper(this, this.game);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
         game.currentScore = 0;
     }
@@ -66,13 +67,6 @@ public class GameScreen extends ScreenAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-    }
-
-    public void gameOver() throws IOException {
-        // TODO
-        // Dispose of all game attributes
-        // Change screen
-        game.setScreen(new GameOver(game));
     }
 
     // Camera Update method updates camera position based on game data

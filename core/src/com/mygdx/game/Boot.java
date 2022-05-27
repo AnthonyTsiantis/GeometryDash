@@ -26,12 +26,13 @@ public class Boot extends Game {
 	public FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
 	public BitmapFont font;
 	public float gameVolume = 1.0f;
+	public String currentScreen;
+	public AudioManager audio;
 
 	// Constructor method to create a new game instance
 	public Boot() {
 		INSTANCE = this;
 	}
-
 
 	// Create method used to populate Instance with data
 	@Override
@@ -57,6 +58,9 @@ public class Boot extends Game {
 		this.fontParameter.color = Color.RED;
 		this.font = fontGenerator.generateFont(this.fontParameter);
 		this.setScreen(new MenuScreen(this));
+		this.currentScreen = "Menu Screen";
+		this.audio = new AudioManager(this);
+		this.audio.playMusic(this.currentScreen);
 	}
 
 	// Render Method, renders the game to the screen using LibGDX methods
@@ -84,5 +88,9 @@ public class Boot extends Game {
 		FileWriter myWriter = new FileWriter(this.filePath);
 		myWriter.write(String.valueOf(this.highScore));
 		myWriter.close();
+	}
+
+	public void dispose() {
+		this.audio.dispose();
 	}
 }

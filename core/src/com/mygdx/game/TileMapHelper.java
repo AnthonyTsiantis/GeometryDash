@@ -26,10 +26,13 @@ public class TileMapHelper {
     private final short BIT_TRIANGLE = 4;
     private final short BIT_GROUND = 8;
 
+    private Boot game;
+
 
     // Constructor initializes game screen
-    public TileMapHelper(GameScreen gameScreen) {
+    public TileMapHelper(GameScreen gameScreen, Boot game) {
         this.gameScreen = gameScreen;
+        this.game = game;
     }
 
     // Setup map method used to create tiled map
@@ -59,7 +62,7 @@ public class TileMapHelper {
                             false,
                             gameScreen.getWorld()
                     );
-                    gameScreen.setPlayer(new Player(rectangle.getWidth(), rectangle.getHeight(), body));
+                    gameScreen.setPlayer(new Player(rectangle.getWidth(), rectangle.getHeight(), body, this.game));
                 }
             }
         }

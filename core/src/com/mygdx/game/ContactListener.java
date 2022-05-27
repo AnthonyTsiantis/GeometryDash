@@ -6,9 +6,11 @@ import static com.mygdx.game.GameScreen.PPM;
 
 public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactListener {
     Boot game;
+    GameScreen screen;
 
-    public ContactListener(Boot game) {
+    public ContactListener(Boot game, GameScreen screen) {
         this.game = game;
+        this.screen = screen;
     }
 
     @Override
@@ -41,6 +43,9 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
     }
 
     private void endGame() {
+        game.audio.stopMusic(game.currentScreen);
+        game.currentScreen = "Game Over";
+        game.audio.playMusic(game.currentScreen);
         try {
             game.setScreen(new GameOver(game));
         } catch (IOException e) {

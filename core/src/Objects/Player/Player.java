@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.mygdx.game.AudioManager;
+import com.mygdx.game.Boot;
 
 // PPM Constant (Pixel's per meter) is used to convert digital data to a real world scale
 import static com.mygdx.game.GameScreen.PPM;
@@ -16,13 +18,13 @@ public class Player extends GameEntity {
     // Initialize counter to 0, counter keeps track of amount of consecutive jumps
     private int counter = 0;
     public float xPos, yPos;
-    private Sound sound;
+    public Boot game;
 
     // Player Constructor class creates player object
-    public Player(float width, float height, Body body) {
+    public Player(float width, float height, Body body, Boot game) {
         super(width, height, body);
         this.speed = 4f;
-        this.sound = Gdx.audio.newSound(Gdx.files.internal("audio/JumpSFX.wav"));
+        this.game = game;
     }
 
     // Update method updates player's position and checks for input
@@ -45,8 +47,7 @@ public class Player extends GameEntity {
             float force = body.getMass() * 25;
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
             counter++;
-            long id = this.sound.play(0.1f);
-            this.sound.setLooping(id, false);
+            game.audio.playSFX("Jump");
         }
 
         // When the user lands, reset the counter
@@ -59,6 +60,5 @@ public class Player extends GameEntity {
     }
 
     private void dispose() {
-        this.sound.dispose();
     }
 }

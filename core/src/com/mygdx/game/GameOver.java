@@ -55,7 +55,9 @@ public class GameOver extends ScreenAdapter {
         if ((mouseX > backButtonHorizontalOffset) && (mouseX < backButtonHorizontalOffset + BACK_BUTTON_WIDTH) && (mouseY > verticalButtonHitboxOffset) && (mouseY < verticalButtonHitboxOffset + BACK_BUTTON_HEIGHT)) {
             game.batch.draw(backButtonActive, backButtonHorizontalOffset, backButtonVerticalOffset, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
-                this.dispose();
+                game.audio.stopMusic(game.currentScreen);
+                game.currentScreen = "Menu Screen";
+                game.audio.playMusic(game.currentScreen);
                 game.setScreen(new MenuScreen(game));
             }
         } else {

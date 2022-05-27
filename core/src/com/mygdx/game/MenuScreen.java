@@ -1,13 +1,10 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class MenuScreen implements Screen {
@@ -30,8 +27,6 @@ public class MenuScreen implements Screen {
     private static final int SIDE_BUTTON_HEIGHT = 100;
     private static int playButtonY, exitButtonY, midWidth, midHeight, midButtonWidth, midButtonHeight;
 
-    private Music lobbyMusic;
-
     // Constructor class populates most class variables
     public MenuScreen(Boot game) {
         this.game = game;
@@ -50,10 +45,6 @@ public class MenuScreen implements Screen {
         exitButtonY = midHeight - 250;
         midButtonWidth = BUTTON_WIDTH / 2;
         midButtonHeight = BUTTON_HEIGHT / 2;
-        this.lobbyMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/Lobby Music.mp3"));
-        this.lobbyMusic.setVolume(game.gameVolume);
-        this.lobbyMusic.setLooping(true);
-        this.lobbyMusic.play();
     }
 
     @Override
@@ -98,8 +89,9 @@ public class MenuScreen implements Screen {
             game.batch.draw(playButtonActive, xButtonOffset, playButtonY, BUTTON_WIDTH, BUTTON_HEIGHT);
             // If the button is clicked, start the game
             if (Gdx.input.isTouched()) {
-                this.dispose();
-                this.lobbyMusic.pause();
+                game.audio.stopMusic(game.currentScreen);
+                game.currentScreen = "Level 1";
+                game.audio.playMusic(game.currentScreen);
                 game.setScreen(new GameScreen(game, game.camera));
             }
 
@@ -119,6 +111,7 @@ public class MenuScreen implements Screen {
                     System.out.println("Trouble writing highscore...");
                     e.printStackTrace();
                 }
+                game.dispose();
                 Gdx.app.exit();
             }
 
