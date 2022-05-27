@@ -45,9 +45,8 @@ public class Player extends GameEntity {
             float force = body.getMass() * 25;
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
             counter++;
-            long id = this.sound.play(0.05f);
+            long id = this.sound.play(0.1f);
             this.sound.setLooping(id, false);
-
         }
 
         // When the user lands, reset the counter

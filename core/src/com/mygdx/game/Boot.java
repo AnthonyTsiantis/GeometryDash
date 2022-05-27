@@ -25,11 +25,13 @@ public class Boot extends Game {
 	public FreeTypeFontGenerator fontGenerator;
 	public FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
 	public BitmapFont font;
+	public float gameVolume = 1.0f;
 
 	// Constructor method to create a new game instance
 	public Boot() {
 		INSTANCE = this;
 	}
+
 
 	// Create method used to populate Instance with data
 	@Override
