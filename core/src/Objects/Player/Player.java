@@ -16,7 +16,7 @@ import static com.mygdx.game.GameScreen.PPM;
 // Player class creates game player
 public class Player extends GameEntity {
     // Initialize counter to 0, counter keeps track of amount of consecutive jumps
-    private int counter = 0;
+    public int counter = 0;
     public float xPos, yPos;
     public Boot game;
 
@@ -43,7 +43,7 @@ public class Player extends GameEntity {
     // Check input method, checks user input
     private void checkUserInput() {
         // if space is pressed and counter is zero, apply a jump force and increase counter
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && counter == 0) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && counter == 0) {
             float force = body.getMass() * 25;
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
             counter++;

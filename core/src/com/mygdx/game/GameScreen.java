@@ -32,8 +32,10 @@ public class GameScreen extends ScreenAdapter {
 
     // Game objects
     private Player player;
-    public Sprite playerSkin;
+    public Sprite playerSkin, victoryFlag, coin;
     private Boot game;
+
+    public boolean showCoin1;
 
 
     // GameScreen constructor creates a new game with an OrthographicCamera as a parameter
@@ -41,15 +43,18 @@ public class GameScreen extends ScreenAdapter {
         this.game = game;
         this.camera = camera;
         this.batch = new SpriteBatch();
+        this.victoryFlag = new Sprite(new Texture("Levels/Other/Victory Flag.png"));
+        this.coin = new Sprite(new Texture("Levels/Other/coin.png"));
         this.playerSkin = new Sprite(new Texture("Skins/Character1.png"));
-        this.playerSkin.setPosition(64f, 64f);
-        this.world = new World(new Vector2(500f, -65f), false); // y value is gravity
+        this.world = new World(new Vector2(750f, -65f), false); // y value is gravity
         this.contactListener = new ContactListener(this.game, this);
-        this.world.setContactListener(contactListener);
+        this.world.setContactListener(this.contactListener);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.tileMapHelper = new TileMapHelper(this, this.game);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
-        game.currentScore = 0;
+        this.game.currentScore = 0;
+        this.showCoin1 = true;
+        this.game.fontParameter.size = 25;
     }
 
     // Update method updates the game every frame (1/60)
@@ -96,12 +101,19 @@ public class GameScreen extends ScreenAdapter {
 
         // Set skin position the same as player position
         this.playerSkin.setPosition((this.player.xPos) - 32, (this.player.yPos) - 32);
+        this.checkCoin();
 
         // set camera
         batch.setProjectionMatrix(camera.combined);
         // begin batch
         batch.begin();
         batch.draw(this.playerSkin, this.playerSkin.getX(), this.playerSkin.getY());
+        batch.draw(this.victoryFlag, 15260f, 385f);
+
+        if (this.showCoin1) {
+            batch.draw(this.coin, 8960f, 515f);
+        }
+
         batch.end();
         // Render World
 
@@ -120,5 +132,12 @@ public class GameScreen extends ScreenAdapter {
     // Set player is a setter for player object
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void checkCoin() {
+        // Coin #1
+        if (this.player.xPos < 9015 && this.player.xPos > 8975 && this.player.yPos < 600) {
+            this.showCoin1 = false;
+        }
     }
 }

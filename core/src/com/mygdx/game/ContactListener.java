@@ -1,4 +1,5 @@
 package com.mygdx.game;
+import Objects.Player.Player;
 import com.badlogic.gdx.physics.box2d.*;
 import java.io.IOException;
 
@@ -7,6 +8,7 @@ import static com.mygdx.game.GameScreen.PPM;
 public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactListener {
     Boot game;
     GameScreen screen;
+    private final float BOX_HEIGHT = 15.005f;
 
     public ContactListener(Boot game, GameScreen screen) {
         this.game = game;
@@ -30,13 +32,16 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
                 id = 0;
             }
 
+            // Box
             if (id == 2) {
-                float playerYPos = b.getBody().getPosition().y * PPM;
-                float objectYPos = (a.getBody().getPosition().y + 5.014999f) * PPM;
-                if (playerYPos < (objectYPos + 63)) {
+                float playerYPos = a.getBody().getPosition().y * PPM;
+                float objectYPos = (b.getBody().getPosition().y + BOX_HEIGHT) * PPM;
+
+                if (playerYPos < objectYPos) {
                     this.endGame();
                 }
-            } else if (id == 4) {
+
+            } else if (id == 4 || id == 16) {
                 this.endGame();
             }
         }

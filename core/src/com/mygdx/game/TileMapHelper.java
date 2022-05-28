@@ -25,6 +25,7 @@ public class TileMapHelper {
     private final short BIT_BOX = 2;
     private final short BIT_TRIANGLE = 4;
     private final short BIT_GROUND = 8;
+    private final short BIT_SUPPORT = 16;
 
     private Boot game;
 
@@ -84,18 +85,22 @@ public class TileMapHelper {
             switch (name) {
                 case "triangle":
                     fixtureDef.filter.categoryBits = BIT_TRIANGLE; // It is a triangle
+                    fixtureDef.filter.maskBits = BIT_PLAYER; // It can collide with player
                     break;
                 case "box":
                     fixtureDef.filter.categoryBits = BIT_BOX; // It is a box
-
+                    fixtureDef.filter.maskBits = BIT_PLAYER; // It can collide with player
                     break;
                 case "ground":
                     fixtureDef.filter.categoryBits = BIT_GROUND; // It is the ground
+                    fixtureDef.filter.maskBits = BIT_PLAYER; // It can collide with player
+                    break;
+                case "support":
+                    fixtureDef.filter.categoryBits = BIT_SUPPORT; // It is the supporting structure
+                    fixtureDef.filter.maskBits = BIT_PLAYER; // It can collide with player
                     break;
             }
         }
-
-        fixtureDef.filter.maskBits = BIT_PLAYER; // It can collide with player
         body.createFixture(fixtureDef);
         shape.dispose();
     }

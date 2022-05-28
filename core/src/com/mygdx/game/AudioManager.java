@@ -23,10 +23,10 @@ public class AudioManager {
         this.level1Music.play();
         this.level1Music.pause();
         this.gameOverMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/Game Over.wav"));
-        this.level1Music.setVolume(game.gameVolume);
-        this.level1Music.setLooping(false);
-        this.level1Music.play();
-        this.level1Music.pause();
+        this.gameOverMusic.setVolume(game.gameVolume);
+        this.gameOverMusic.setLooping(false);
+        this.gameOverMusic.play();
+        this.gameOverMusic.pause();
         this.jumpSFX = Gdx.audio.newSound(Gdx.files.internal("audio/JumpSFX.wav"));
     }
 

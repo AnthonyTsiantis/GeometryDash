@@ -21,10 +21,11 @@ public class GameOver extends ScreenAdapter {
         gameOverBackground = new Texture("FlashScreens/GameOver.png");
         backButtonActive = new Texture("Menu/Back_Button_On.png");
         backButtonInactive = new Texture("Menu/Back_Button_Off.png");
-        if(game.currentScore > game.highScore) {
-            game.highScore = game.currentScore;
-            game.writeHighScore();
+        if(this.game.currentScore > this.game.highScore) {
+            this.game.highScore = game.currentScore;
+            this.game.writeHighScore();
         }
+        this.game.fontParameter.size = 100;
     }
 
 
