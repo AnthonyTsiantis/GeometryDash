@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="250" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="50">
+<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="250" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="181">
  <tileset firstgid="1" source="Texture Atlas.tsx"/>
  <layer id="1" name="background" width="250" height="20">
   <data encoding="base64" compression="zlib">
-   eJzt1+HOgiAYgFEr4/4vuT+5MYaisEL0nO358SnLV/HbapoAAAAAAAAA4Lfm3gNApbmyO7jLfXI93t11ng2x0HuAA/7x7o76/zHq3OzTur9nfj/OPFtvns21pft7dL/P/H60zFb72/zMzyM2ypyjeG+cyz3r3Pp0Xdi5bu2aIWr+ftZS/HfuO3hu/dZ39a37X86X1iziuXPS2VoKDaWfVbr/3LHc8bBxrnS9dN/33MNRpRnWjuf2s+b6JQ9Jl+8p6fK9JEmSJElS9z43WBFh
+   eJzt19EOgiAAQFEr8/8/uZfcGAMinDLwnO0+lCYouuWyAAAAAAAAAMC51t4TgEZrY3dwl/NkPu7dPNeGFlvvCSzX3LujPh+jzps6V61vj/vIvZvn2swtXt+z1nu057rm3Xvk9/NR5jmKd2Fb6lqn9o/32yr3y425Ba3fY+2Fn3P/rcPf/zNOaf99zF9K48Zjvg+0HSg+Vklue+r73LqHv8ltj69NzTm0qF3HUGo9W8cveUiavqek6XtJkiRJkqTufQDGVxFJ
   </data>
  </layer>
  <objectgroup id="3" name="Objects">
@@ -38,9 +38,6 @@
   <object id="39" name="box" x="4288" y="704">
    <polygon points="0,0 64,0 64,64 0,64"/>
   </object>
-  <object id="41" name="coin" x="13376" y="384">
-   <polygon points="0,0 0,64 64,64 64,0"/>
-  </object>
   <object id="44" name="box" x="7296" y="896">
    <polygon points="0,0 64,0 64,-64 0,-64"/>
   </object>
@@ -56,8 +53,299 @@
   <object id="48" name="box" x="8320" y="576">
    <polygon points="0,0 64,0 64,64 0,64"/>
   </object>
-  <object id="49" name="ground" x="8512" y="768">
-   <polygon points="0,0 960,0 960,64 0,64"/>
+  <object id="50" name="triangle" x="2240" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="51" name="triangle" x="2880" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="52" name="triangle" x="4096" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="53" name="triangle" x="4160" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="54" name="triangle" x="4224" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="55" name="triangle" x="4352" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="56" name="triangle" x="4416" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="61" name="triangle" x="6208" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="62" name="triangle" x="6272" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="66" name="triangle" x="7552" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="67" name="triangle" x="7616" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="68" name="triangle" x="7680" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="69" name="triangle" x="7744" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="70" name="triangle" x="7808" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="71" name="triangle" x="7872" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="72" name="triangle" x="7936" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="73" name="triangle" x="8000" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="74" name="triangle" x="8064" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="75" name="triangle" x="8128" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="76" name="triangle" x="8192" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="77" name="triangle" x="8256" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="78" name="triangle" x="8320" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="79" name="triangle" x="8384" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="80" name="triangle" x="8448" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="81" name="triangle" x="9472" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="82" name="triangle" x="9536" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="83" name="triangle" x="9600" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="84" name="triangle" x="9664" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="85" name="triangle" x="10176" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="87" name="triangle" x="10560" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="88" name="triangle" x="10944" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="91" name="triangle" x="11392" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="92" name="triangle" x="11456" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="93" name="triangle" x="12608" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="95" name="triangle" x="13504" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="96" name="triangle" x="13568" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="98" name="triangle" x="14656" y="896">
+   <polygon points="0,0 64,0 30.9565,-63.9565"/>
+  </object>
+  <object id="99" name="triangle" x="2816" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="110" name="triangle" x="3840" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="111" name="triangle" x="3904" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="112" name="triangle" x="3968" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="113" name="triangle" x="4480" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="114" name="triangle" x="5760" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="115" name="triangle" x="5952" y="704">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="117" name="triangle" x="6848" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="118" name="triangle" x="6912" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="120" name="ground" x="8576" y="512">
+   <polygon points="0,0 896,0 896,64 0,64"/>
+  </object>
+  <object id="121" name="triangle" x="8512" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="122" name="triangle" x="8576" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="123" name="triangle" x="8640" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="124" name="triangle" x="8704" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="125" name="triangle" x="8768" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="126" name="triangle" x="8832" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="127" name="triangle" x="8896" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="128" name="triangle" x="8960" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="129" name="triangle" x="9024" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="130" name="triangle" x="9088" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="131" name="triangle" x="9152" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="132" name="triangle" x="9216" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="133" name="triangle" x="9280" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="134" name="triangle" x="9344" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="135" name="triangle" x="9408" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="139" name="box" x="9664" y="640">
+   <polygon points="0,0 0,64 64,64 64,0"/>
+  </object>
+  <object id="140" name="triangle" x="10880" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="141" name="triangle" x="11904" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="142" name="triangle" x="11968" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="143" name="triangle" x="12032" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="144" name="triangle" x="12096" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="145" name="triangle" x="12160" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="146" name="triangle" x="12224" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="147" name="triangle" x="12288" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="148" name="triangle" x="12352" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="149" name="triangle" x="12416" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="150" name="triangle" x="12480" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="151" name="triangle" x="12544" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="153" name="box" x="11840" y="832">
+   <polygon points="0,0 64,0 64,64 0,64"/>
+  </object>
+  <object id="156" name="box" x="12096" y="768">
+   <polygon points="0,0 64,0 64,64 0,64"/>
+  </object>
+  <object id="157" name="box" x="12352" y="704">
+   <polygon points="0,0 64,0 64,64 0,64"/>
+  </object>
+  <object id="158" name="box" x="12608" y="640">
+   <polygon points="0,0 64,0 64,64 0,64"/>
+  </object>
+  <object id="159" name="box" x="12864" y="576">
+   <polygon points="0,0 64,0 64,64 0,64"/>
+  </object>
+  <object id="160" name="box" x="13120" y="512">
+   <polygon points="0,0 64,0 64,64 0,64"/>
+  </object>
+  <object id="161" name="box" x="13376" y="448">
+   <polygon points="0,0 64,0 64,64 0,64"/>
+  </object>
+  <object id="162" name="triangle" x="14336" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="163" name="box" x="5440" y="896">
+   <polygon points="0,0 64,0 64,-64 0,-64"/>
+  </object>
+  <object id="164" name="box" x="5696" y="832">
+   <polygon points="0,0 64,0 64,-64 0,-64"/>
+  </object>
+  <object id="165" name="support" x="5696" y="896">
+   <polygon points="0,0 64,0 64,-64 0,-64"/>
+  </object>
+  <object id="167" name="box" x="5952" y="768">
+   <polygon points="0,0 64,0 64,-64 0,-64"/>
+  </object>
+  <object id="168" name="triangle" x="4864" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="169" name="triangle" x="4928" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="170" name="triangle" x="4992" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="172" name="triangle" x="5504" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="173" name="triangle" x="5568" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="174" name="triangle" x="5632" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="175" x="8512" y="768">
+   <polygon points="0,0 384,0 384,64 0,64"/>
+  </object>
+  <object id="177" name="box" x="9088" y="768">
+   <polygon points="0,0 384,0 384,64 0,64"/>
+  </object>
+  <object id="178" name="triangle" x="7360" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="179" name="triangle" x="7424" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
+  </object>
+  <object id="180" name="triangle" x="7488" y="896">
+   <polygon points="0,0 28.5781,-32 64,0"/>
   </object>
  </objectgroup>
 </map>

@@ -2,8 +2,10 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import java.io.IOException;
 
@@ -14,6 +16,7 @@ public class GameOver extends ScreenAdapter {
     Texture backButtonInactive;
     private static final int BACK_BUTTON_WIDTH = 150;
     private static final int BACK_BUTTON_HEIGHT = 75;
+    public FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
 
 
     public GameOver(Boot game) throws IOException {
@@ -25,7 +28,16 @@ public class GameOver extends ScreenAdapter {
             this.game.highScore = game.currentScore;
             this.game.writeHighScore();
         }
-        this.game.fontParameter.size = 100;
+        this.setFont();
+    }
+
+    private void setFont() {
+        this.fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        this.fontParameter.size = 100;
+        this.fontParameter.borderWidth = 5;
+        this.fontParameter.borderColor = Color.BLACK;
+        this.fontParameter.color = Color.RED;
+        this.game.font = this.game.fontGenerator.generateFont(this.fontParameter);
     }
 
 

@@ -5,11 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -35,7 +38,9 @@ public class GameScreen extends ScreenAdapter {
     public Sprite playerSkin, victoryFlag, coin;
     private Boot game;
 
-    public boolean showCoin1;
+    public boolean showCoin1, showCoin2, showCoin3;
+    public int collectedCoins;
+    public FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
 
 
     // GameScreen constructor creates a new game with an OrthographicCamera as a parameter
@@ -46,7 +51,7 @@ public class GameScreen extends ScreenAdapter {
         this.victoryFlag = new Sprite(new Texture("Levels/Other/Victory Flag.png"));
         this.coin = new Sprite(new Texture("Levels/Other/coin.png"));
         this.playerSkin = new Sprite(new Texture("Skins/Character1.png"));
-        this.world = new World(new Vector2(750f, -65f), false); // y value is gravity
+        this.world = new World(new Vector2(725f, -65f), false); // y value is gravity
         this.contactListener = new ContactListener(this.game, this);
         this.world.setContactListener(this.contactListener);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
@@ -54,7 +59,19 @@ public class GameScreen extends ScreenAdapter {
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
         this.game.currentScore = 0;
         this.showCoin1 = true;
-        this.game.fontParameter.size = 25;
+        this.showCoin2 = true;
+        this.showCoin3 = true;
+        this.collectedCoins = 0;
+        this.setFont();
+    }
+
+    private void setFont() {
+        this.fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        this.fontParameter.size = 25;
+        this.fontParameter.borderWidth = 5;
+        this.fontParameter.borderColor = Color.BLACK;
+        this.fontParameter.color = Color.WHITE;
+        this.game.font = this.game.fontGenerator.generateFont(this.fontParameter);
     }
 
     // Update method updates the game every frame (1/60)
@@ -93,7 +110,7 @@ public class GameScreen extends ScreenAdapter {
             e.printStackTrace();
         }
         // Clear screen
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // render map
@@ -101,7 +118,7 @@ public class GameScreen extends ScreenAdapter {
 
         // Set skin position the same as player position
         this.playerSkin.setPosition((this.player.xPos) - 32, (this.player.yPos) - 32);
-        this.checkCoin();
+        this.checkObjects();
 
         // set camera
         batch.setProjectionMatrix(camera.combined);
@@ -110,9 +127,20 @@ public class GameScreen extends ScreenAdapter {
         batch.draw(this.playerSkin, this.playerSkin.getX(), this.playerSkin.getY());
         batch.draw(this.victoryFlag, 15260f, 385f);
 
-        if (this.showCoin1) {
-            batch.draw(this.coin, 8960f, 515f);
+        if(this.showCoin1) {
+            batch.draw(this.coin, 4290f, 590f);
         }
+
+        if (this.showCoin2) {
+            batch.draw(this.coin, 8960f, 580f);
+        }
+
+        if (this.showCoin3) {
+            batch.draw(this.coin, 13375f, 840f);
+        }
+
+        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
+        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
 
         batch.end();
         // Render World
@@ -134,10 +162,20 @@ public class GameScreen extends ScreenAdapter {
         this.player = player;
     }
 
-    public void checkCoin() {
+    public void checkObjects() {
         // Coin #1
-        if (this.player.xPos < 9015 && this.player.xPos > 8975 && this.player.yPos < 600) {
+        if (this.player.xPos > 4290 && this.player.xPos < 4334 && this.player.yPos < 740 && this.player.yPos > 590 && this.showCoin1) {
             this.showCoin1 = false;
+            this.collectedCoins++;
+        } else if (this.player.xPos < 9024 && this.player.xPos > 8960 && this.player.yPos < 650 && this.player.yPos > 560 && this.showCoin2) { // Coin #2
+            this.showCoin2 = false;
+            this.collectedCoins++;
+        } else if (this.player.xPos > 13375 && this.player.xPos < 13440 && this.player.yPos < 950 && this.player.yPos > 840 && this.showCoin3) { // Coin #3
+            this.showCoin3 = false;
+            this.collectedCoins++;
+        } else if (this.player.xPos > 15260) { // Flag
+            //TODO Set next level
         }
+
     }
 }

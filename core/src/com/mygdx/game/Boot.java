@@ -51,12 +51,6 @@ public class Boot extends Game {
 		}
 		batch = new SpriteBatch();
 		this.fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/impact.ttf"));
-		this.fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		this.fontParameter.size = 100;
-		this.fontParameter.borderWidth = 5;
-		this.fontParameter.borderColor = Color.BLACK;
-		this.fontParameter.color = Color.RED;
-		this.font = fontGenerator.generateFont(this.fontParameter);
 		this.setScreen(new MenuScreen(this));
 		this.currentScreen = "Menu Screen";
 		this.audio = new AudioManager(this);

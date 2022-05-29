@@ -43,7 +43,7 @@ public class Player extends GameEntity {
     // Check input method, checks user input
     private void checkUserInput() {
         // if space is pressed and counter is zero, apply a jump force and increase counter
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && counter == 0) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && counter == 0 && body.getLinearVelocity().y >= 0) {
             float force = body.getMass() * 25;
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
             counter++;
