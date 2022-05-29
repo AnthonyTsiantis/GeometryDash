@@ -48,6 +48,7 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
     }
 
     private void endGame() {
+        this.game.wealth += this.screen.collectedCoins;
         game.audio.stopMusic(game.currentScreen);
         game.currentScreen = "Game Over";
         game.audio.playMusic(game.currentScreen);

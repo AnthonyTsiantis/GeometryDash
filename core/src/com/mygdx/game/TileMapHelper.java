@@ -37,8 +37,16 @@ public class TileMapHelper {
     }
 
     // Setup map method used to create tiled map
-    public OrthogonalTiledMapRenderer setupMap() {
-        tiledMap = new TmxMapLoader().load("Levels/Level 1/Level1.tmx");
+    public OrthogonalTiledMapRenderer setupMap(int level) {
+        if (level == 1) {
+            tiledMap = new TmxMapLoader().load("Levels/Level 1/Level1.tmx");
+        } else if (level == 2) {
+
+        } else if (level == 3) {
+
+        } else if (level == 4) {
+
+        }
         parseMapObjects(tiledMap.getLayers().get("Objects").getObjects());
         return new OrthogonalTiledMapRenderer(tiledMap);
     }

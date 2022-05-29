@@ -1,44 +1,26 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
-import java.io.IOException;
+public class LevelMenu implements Screen {
+    Boot game;
 
-public class GameOver extends ScreenAdapter {
-    private Boot game;
-    Texture gameOverBackground;
+    Texture levelMenuBackground;
     Texture backButtonActive;
     Texture backButtonInactive;
+
     private static final int BACK_BUTTON_WIDTH = 150;
     private static final int BACK_BUTTON_HEIGHT = 75;
-    public FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
 
-
-    public GameOver(Boot game) throws IOException {
+    public LevelMenu(Boot game) {
         this.game = game;
-        gameOverBackground = new Texture("FlashScreens/GameOver.png");
+        levelMenuBackground = new Texture("Menu/background.jpeg");
         backButtonActive = new Texture("Menu/Back_Button_On.png");
         backButtonInactive = new Texture("Menu/Back_Button_Off.png");
-        if(this.game.currentScore > this.game.highScore) {
-            this.game.highScore = this.game.currentScore;
-        }
-        this.setFont();
     }
-
-    private void setFont() {
-        this.fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        this.fontParameter.size = 100;
-        this.fontParameter.borderWidth = 5;
-        this.fontParameter.borderColor = Color.BLACK;
-        this.fontParameter.color = Color.RED;
-        this.game.font = this.game.fontGenerator.generateFont(this.fontParameter);
-    }
-
 
     @Override
     public void show() {
@@ -48,12 +30,12 @@ public class GameOver extends ScreenAdapter {
     @Override
     public void render(float delta) {
         // Clear the screen
-        Gdx.gl.glClearColor(0f, 0.0f, 0f, 1f);
+        Gdx.gl.glClearColor(0.3f, 0.0f, 0.9f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Create batch and draw to it
         game.batch.begin();
-        game.batch.draw(gameOverBackground, 0, 0, game.widthScreen, game.heightScreen);
+        game.batch.draw(levelMenuBackground, 0, 0, game.widthScreen, game.heightScreen);
 
         int backButtonVerticalOffset = 25;
         int backButtonHorizontalOffset = 25;
@@ -67,18 +49,12 @@ public class GameOver extends ScreenAdapter {
         if ((mouseX > backButtonHorizontalOffset) && (mouseX < backButtonHorizontalOffset + BACK_BUTTON_WIDTH) && (mouseY > verticalButtonHitboxOffset) && (mouseY < verticalButtonHitboxOffset + BACK_BUTTON_HEIGHT)) {
             game.batch.draw(backButtonActive, backButtonHorizontalOffset, backButtonVerticalOffset, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
-                game.audio.stopMusic(game.currentScreen);
-                game.currentScreen = "Menu Screen";
-                game.audio.playMusic(game.currentScreen);
+                this.dispose();
                 game.setScreen(new MenuScreen(game));
             }
         } else {
             game.batch.draw(backButtonInactive, backButtonHorizontalOffset, backButtonVerticalOffset, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
         }
-
-        game.font.draw(game.batch, String.valueOf(game.levelNum), 925, 425);
-        game.font.draw(game.batch, String.valueOf(game.currentScore), 925, 325);
-        game.font.draw(game.batch, String.valueOf(game.highScore + 1), 925, 225);
         game.batch.end();
     }
 

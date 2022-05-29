@@ -4,12 +4,10 @@ import Objects.Player.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -35,7 +33,7 @@ public class GameScreen extends ScreenAdapter {
 
     // Game objects
     private Player player;
-    public Sprite playerSkin, victoryFlag, coin;
+    public Sprite victoryFlag, coin;
     private Boot game;
 
     public boolean showCoin1, showCoin2, showCoin3;
@@ -52,13 +50,12 @@ public class GameScreen extends ScreenAdapter {
         this.batch = new SpriteBatch();
         this.victoryFlag = new Sprite(new Texture("Levels/Other/Victory Flag.png"));
         this.coin = new Sprite(new Texture("Levels/Other/coin.png"));
-        this.playerSkin = new Sprite(new Texture("Skins/Character1.png"));
         this.world = new World(new Vector2(725f, -65f), false); // y value is gravity
         this.contactListener = new ContactListener(this.game, this);
         this.world.setContactListener(this.contactListener);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.tileMapHelper = new TileMapHelper(this, this.game);
-        this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
+        this.orthogonalTiledMapRenderer = tileMapHelper.setupMap(game.levelNum);
         this.game.currentScore = 0;
         this.showCoin1 = true;
         this.showCoin2 = true;
@@ -115,17 +112,36 @@ public class GameScreen extends ScreenAdapter {
             Gdx.gl.glClearColor(0.25f, 0.25f, 0.5f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             this.batch.begin();
-            this.batch.draw(this.level1Flash, 0, 0, 1280, 720);
+            if (game.levelNum == 1) {
+                this.batch.draw(this.level1Flash, 0, 0, 1280, 720);
+            } else if (game.levelNum == 2) {
+
+            } else if (game.levelNum == 3) {
+
+            } else if (game.levelNum == 4) {
+
+            }
             this.batch.end();
             this.counter++;
-            System.out.println(counter);
+        } else if (counter == 100) {
+            this.game.currentScreen = "Level 1";
+            this.game.audio.playMusic(this.game.currentScreen);
+            this.counter++;
         } else {
-            this.level1();
+            if (game.levelNum == 1) {
+                this.renderLevel1();
+            } else if (game.levelNum == 2) {
+                this.renderLevel2();
+            } else if (game.levelNum == 3) {
+
+            } else if (game.levelNum == 4) {
+
+            }
         }
 
     }
 
-    public void level1() {
+    public void levelFoundation() {
         // Call update method
         try {
             this.update();
@@ -140,15 +156,20 @@ public class GameScreen extends ScreenAdapter {
         orthogonalTiledMapRenderer.render();
 
         // Set skin position the same as player position
-        this.playerSkin.setPosition((this.player.xPos) - 32, (this.player.yPos) - 32);
-        this.checkObjects();
+        this.game.playerSkin.setPosition((this.player.xPos) - 32, (this.player.yPos) - 32);
 
         // set camera
         batch.setProjectionMatrix(camera.combined);
+    }
+
+    public void renderLevel1() {
+        this.levelFoundation();
+        this.checkObjectsLevel1();
+
         // begin batch
         batch.begin();
-        batch.draw(this.playerSkin, this.playerSkin.getX(), this.playerSkin.getY());
-        batch.draw(this.victoryFlag, 15260f, 385f);
+        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
+        batch.draw(this.victoryFlag, 15260f, 385f, 128, 128);
 
         if(this.showCoin1) {
             batch.draw(this.coin, 4290f, 590f);
@@ -169,22 +190,60 @@ public class GameScreen extends ScreenAdapter {
         // Render World
 
         // TODO Comment this out to get rid of map boundaries
-        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        //  box2DDebugRenderer.render(world, camera.combined.scl(PPM));
 
         // Update Game Score
         game.currentScore = ((int) this.player.xPos) / 10;
     }
 
-    private void level2() {
+    private void createLevel2() {
+        this.orthogonalTiledMapRenderer = tileMapHelper.setupMap(game.levelNum);
+        this.world = new World(new Vector2(725f, -65f), false); // y value is gravity
+        this.collectedCoins = 0;
 
+
+        this.game.audio.playMusic(game.currentScreen);
+    }
+
+    private void renderLevel2() {
+        this.levelFoundation();
+        this.batch.begin();
+        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
+
+
+        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
+        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
+        this.batch.end();
+        // Update Game Score
+        game.currentScore = ((int) this.player.xPos) / 10;
     }
 
     private void level3() {
+        this.levelFoundation();
+        this.batch.begin();
+        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
 
+
+
+        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
+        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
+        this.batch.end();
+        // Update Game Score
+        game.currentScore = ((int) this.player.xPos) / 10;
     }
 
     private void level4() {
+        this.levelFoundation();
+        this.batch.begin();
+        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
 
+
+
+        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
+        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
+        this.batch.end();
+        // Update Game Score
+        game.currentScore = ((int) this.player.xPos) / 10;
     }
 
     // getWorld method returns this class' world
@@ -197,7 +256,7 @@ public class GameScreen extends ScreenAdapter {
         this.player = player;
     }
 
-    public void checkObjects() {
+    public void checkObjectsLevel1() {
         // Coin #1
         if (this.player.xPos > 4290 && this.player.xPos < 4334 && this.player.yPos < 740 && this.player.yPos > 590 && this.showCoin1) {
             this.showCoin1 = false;
@@ -210,7 +269,23 @@ public class GameScreen extends ScreenAdapter {
             this.collectedCoins++;
         } else if (this.player.xPos > 15260) { // Flag
             //TODO Set next level
+            game.levelNum++;
+            this.counter = 0;
+            this.game.audio.stopMusic(game.currentScreen);
+            game.currentScreen = "Level 2";
+            this.createLevel2();
         }
+    }
+
+    public void checkObjectsLevel2() {
+
+    }
+
+    public void checkObjectsLevel3() {
+
+    }
+
+    public void checkObjectsLevel4() {
 
     }
 }

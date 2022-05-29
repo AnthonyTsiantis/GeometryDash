@@ -86,8 +86,6 @@ public class MenuScreen implements Screen {
             // If the button is clicked, start the game
             if (Gdx.input.isTouched()) {
                 this.game.audio.stopMusic(this.game.currentScreen);
-                this.game.currentScreen = "Level 1";
-                this.game.audio.playMusic(this.game.currentScreen);
                 this.game.setScreen(new GameScreen(this.game, this.game.camera));
             }
 
@@ -102,7 +100,7 @@ public class MenuScreen implements Screen {
             // If button is clicked, end the application
             if (Gdx.input.isTouched()) {
                 try {
-                    this.game.writeHighScore();
+                    this.game.storeData();
                 } catch (IOException e) {
                     System.out.println("Trouble writing highscore...");
                     e.printStackTrace();
