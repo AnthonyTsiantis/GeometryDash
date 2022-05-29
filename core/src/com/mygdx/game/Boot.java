@@ -24,7 +24,6 @@ public class Boot extends Game {
 	public int levelNum, currentScore, highScore;
 	public String filePath = System.getProperty("user.dir") + "/data/gameData.txt";
 	public FreeTypeFontGenerator fontGenerator;
-	public FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
 	public BitmapFont font;
 	public float gameVolume = 1.0f;
 	public String currentScreen;
@@ -122,5 +121,10 @@ public class Boot extends Game {
 
 	public void dispose() {
 		this.audio.dispose();
+		try {
+			this.storeData();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

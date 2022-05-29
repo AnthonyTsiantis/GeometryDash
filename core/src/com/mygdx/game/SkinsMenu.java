@@ -2,8 +2,11 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class SkinsMenu implements Screen {
     Boot game;
@@ -22,6 +25,7 @@ public class SkinsMenu implements Screen {
 
     private int x;
     private int y;
+    public FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
 
 
     public SkinsMenu(Boot game) {
@@ -38,6 +42,16 @@ public class SkinsMenu implements Screen {
         this.backButtonInactive = new Texture("Menu/Back_Button_Off.png");
         this.x = 200;
         this.y = 120;
+        this.setFont();
+    }
+
+    private void setFont() {
+        this.fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        this.fontParameter.size = 50;
+        this.fontParameter.borderWidth = 5;
+        this.fontParameter.borderColor = Color.BLACK;
+        this.fontParameter.color = Color.GREEN;
+        this.game.font = this.game.fontGenerator.generateFont(this.fontParameter);
     }
     @Override
     public void show() {
@@ -54,6 +68,15 @@ public class SkinsMenu implements Screen {
         game.batch.begin();
         game.batch.draw(skinsMenuBackground, 0, 0, game.widthScreen, game.heightScreen);
         this.drawButtons();
+        int xOffset;
+        if (game.wealth < 10) {
+            xOffset = 200;
+        } else if (game.wealth < 100) {
+            xOffset = 225;
+        } else {
+            xOffset = 275;
+        }
+        game.font.draw(game.batch, "Coins: " + game.wealth, this.game.widthScreen - xOffset, 50);
         game.batch.end();
     }
 
@@ -154,10 +177,10 @@ public class SkinsMenu implements Screen {
                 }
 
                 this.x += 370;
-                if (checkCollision(mouseX, mouseY)) {
+                if (checkCollision(mouseX, mouseY) && this.game.wealth >= 9) {
                     this.game.batch.draw(this.purchase9On, this.x, this.y, SELECTED_BUTTON_WIDTH, SELECTED_BUTTON_HEIGHT);
                     if(Gdx.input.isTouched()) {
-                        // TODO MAKE SURE USER CAN AFFORD THIS AND MINUS COINS
+                        this.game.wealth -= 9;
                         this.game.purchased9 = true;
                         this.game.playerSkinID = 3;
                         this.game.setSkin(this.game.playerSkinID);
@@ -178,10 +201,10 @@ public class SkinsMenu implements Screen {
                 }
 
                 this.x += 730;
-                if (checkCollision(mouseX, mouseY)) {
+                if (checkCollision(mouseX, mouseY) && this.game.wealth >= 9) {
                     this.game.batch.draw(this.purchase9On, this.x, this.y, SELECTED_BUTTON_WIDTH, SELECTED_BUTTON_HEIGHT);
                     if (Gdx.input.isTouched()) {
-                        // TODO MAKE SURE USER CAN AFFORD THIS AND MINUS COINS
+                        this.game.wealth -= 9;
                         this.game.purchased9 = true;
                         this.game.playerSkinID = 3;
                         this.game.setSkin(this.game.playerSkinID);
@@ -194,10 +217,10 @@ public class SkinsMenu implements Screen {
         } else if (this.game.purchased9) {
             if (this.game.playerSkinID == 1) {
                 this.x += 360;
-                if (checkCollision(mouseX, mouseY)) {
+                if (checkCollision(mouseX, mouseY) && this.game.wealth >= 6) {
                     this.game.batch.draw(this.purchase6On, this.x, this.y, SELECTED_BUTTON_WIDTH, SELECTED_BUTTON_HEIGHT);
                     if(Gdx.input.isTouched()) {
-                        // TODO MAKE SURE USER CAN AFFORD THIS AND MINUS COINS
+                        this.game.wealth -= 6;
                         this.game.purchased6 = true;
                         this.game.playerSkinID = 2;
                         this.game.setSkin(this.game.playerSkinID);
@@ -218,10 +241,10 @@ public class SkinsMenu implements Screen {
                 }
             } else if (this.game.playerSkinID == 3) {
                 this.x -= 370;
-                if (checkCollision(mouseX, mouseY)) {
+                if (checkCollision(mouseX, mouseY) && this.game.wealth >= 6) {
                     this.game.batch.draw(this.purchase6On, this.x, this.y, SELECTED_BUTTON_WIDTH, SELECTED_BUTTON_HEIGHT);
                     if(Gdx.input.isTouched()) {
-                        // TODO MAKE SURE USER CAN AFFORD THIS AND MINUS COINS
+                        this.game.wealth -= 6;
                         this.game.purchased6 = true;
                         this.game.playerSkinID = 2;
                         this.game.setSkin(this.game.playerSkinID);
@@ -232,23 +255,21 @@ public class SkinsMenu implements Screen {
 
                 this.x -= 360;
                 if (checkCollision(mouseX, mouseY)) {
-                    this.game.batch.draw(this.purchase9On, this.x, this.y, SELECTED_BUTTON_WIDTH, SELECTED_BUTTON_HEIGHT);
+                    this.game.batch.draw(this.selectOn, this.x, this.y, SELECTED_BUTTON_WIDTH, SELECTED_BUTTON_HEIGHT);
                     if (Gdx.input.isTouched()) {
-                        // TODO MAKE SURE USER CAN AFFORD THIS AND MINUS COINS
-                        this.game.purchased9 = true;
-                        this.game.playerSkinID = 3;
+                        this.game.playerSkinID = 1;
                         this.game.setSkin(this.game.playerSkinID);
                     }
                 } else {
-                    this.game.batch.draw(this.purchase9Off, this.x, this.y, SELECTED_BUTTON_WIDTH, SELECTED_BUTTON_HEIGHT);
+                    this.game.batch.draw(this.selectOff, this.x, this.y, SELECTED_BUTTON_WIDTH, SELECTED_BUTTON_HEIGHT);
                 }
             }
         } else {
             this.x += 360;
-            if (checkCollision(mouseX, mouseY)) {
+            if (checkCollision(mouseX, mouseY) && this.game.wealth >= 6) {
                 this.game.batch.draw(this.purchase6On, this.x, this.y, SELECTED_BUTTON_WIDTH, SELECTED_BUTTON_HEIGHT);
                 if(Gdx.input.isTouched()) {
-                    // TODO MAKE SURE USER CAN AFFORD THIS AND MINUS COINS
+                    this.game.wealth -= 6;
                     this.game.purchased6 = true;
                     this.game.playerSkinID = 2;
                     this.game.setSkin(this.game.playerSkinID);
@@ -258,9 +279,11 @@ public class SkinsMenu implements Screen {
             }
 
             this.x += 370;
-            if (checkCollision(mouseX, mouseY)) {
+            if (checkCollision(mouseX, mouseY) && this.game.wealth >= 9) {
                 this.game.batch.draw(this.purchase9On, this.x, this.y, SELECTED_BUTTON_WIDTH, SELECTED_BUTTON_HEIGHT);
                 if(Gdx.input.isTouched()) {
+                    this.game.wealth -= 9;
+                    this.game.purchased9 = true;
                     this.game.playerSkinID = 3;
                     this.game.setSkin(this.game.playerSkinID);
                 }
