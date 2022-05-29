@@ -41,6 +41,8 @@ public class GameScreen extends ScreenAdapter {
     public boolean showCoin1, showCoin2, showCoin3;
     public int collectedCoins;
     public FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
+    private int counter;
+    private Texture level1Flash;
 
 
     // GameScreen constructor creates a new game with an OrthographicCamera as a parameter
@@ -63,6 +65,8 @@ public class GameScreen extends ScreenAdapter {
         this.showCoin3 = true;
         this.collectedCoins = 0;
         this.setFont();
+        this.counter = 0;
+        this.level1Flash = new Texture("Levels/Level 1/Level 1 Flashscreen.png");
     }
 
     private void setFont() {
@@ -87,7 +91,10 @@ public class GameScreen extends ScreenAdapter {
         //TODO
         // IF ESCAPE IS PRESSED AND NOT IN MAIN MENU DISPLAY PAUSE MENU, ELSE QUIT
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
+            this.game.audio.stopMusic(game.currentScreen);
+            this.game.currentScreen = "Menu Screen";
+            this.game.audio.playMusic(game.currentScreen);
+            this.game.setScreen(new MenuScreen(game));
         }
     }
 
@@ -103,6 +110,22 @@ public class GameScreen extends ScreenAdapter {
     // Render method, renders game
     @Override
     public void render(float delta) {
+        if (this.counter < 100) {
+            // Clear screen
+            Gdx.gl.glClearColor(0.25f, 0.25f, 0.5f, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            this.batch.begin();
+            this.batch.draw(this.level1Flash, 0, 0, 1280, 720);
+            this.batch.end();
+            this.counter++;
+            System.out.println(counter);
+        } else {
+            this.level1();
+        }
+
+    }
+
+    public void level1() {
         // Call update method
         try {
             this.update();
@@ -110,7 +133,7 @@ public class GameScreen extends ScreenAdapter {
             e.printStackTrace();
         }
         // Clear screen
-        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
+        Gdx.gl.glClearColor(0.25f, 0.25f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // render map
@@ -150,6 +173,18 @@ public class GameScreen extends ScreenAdapter {
 
         // Update Game Score
         game.currentScore = ((int) this.player.xPos) / 10;
+    }
+
+    private void level2() {
+
+    }
+
+    private void level3() {
+
+    }
+
+    private void level4() {
+
     }
 
     // getWorld method returns this class' world
