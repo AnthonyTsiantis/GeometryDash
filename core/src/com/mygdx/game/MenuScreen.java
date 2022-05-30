@@ -86,7 +86,7 @@ public class MenuScreen implements Screen {
             // If the button is clicked, start the game
             if (Gdx.input.isTouched()) {
                 this.game.audio.stopMusic(this.game.currentScreen);
-                this.game.setScreen(new GameScreen(this.game, this.game.camera));
+                this.game.setScreen(new CompletedLevel(this.game, new GameScreen(this.game, this.game.camera))); //new GameScreen(this.game, this.game.camera)
             }
 
         // If outside button display grey button

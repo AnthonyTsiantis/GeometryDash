@@ -19,7 +19,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import java.io.IOException;
 
 // Game screen class is used to create a game screen
-
 public class GameScreen extends ScreenAdapter {
     // Initialize the game variables
     private OrthographicCamera camera;
@@ -41,6 +40,7 @@ public class GameScreen extends ScreenAdapter {
     public FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
     private int counter;
     private Texture level1Flash;
+    private CompletedLevel completedLevel;
 
 
     // GameScreen constructor creates a new game with an OrthographicCamera as a parameter
@@ -169,7 +169,7 @@ public class GameScreen extends ScreenAdapter {
         // begin batch
         batch.begin();
         batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
-        batch.draw(this.victoryFlag, 15260f, 385f, 128, 128);
+        batch.draw(this.victoryFlag, 15260f, 375f, 128, 128);
 
         if(this.showCoin1) {
             batch.draw(this.coin, 4290f, 590f);
@@ -268,12 +268,10 @@ public class GameScreen extends ScreenAdapter {
             this.showCoin3 = false;
             this.collectedCoins++;
         } else if (this.player.xPos > 15260) { // Flag
-            //TODO Set next level
-            game.levelNum++;
             this.counter = 0;
             this.game.audio.stopMusic(game.currentScreen);
-            game.currentScreen = "Level 2";
-            this.createLevel2();
+            this.completedLevel = new CompletedLevel(this.game, this);
+            this.game.setScreen(this.completedLevel);
         }
     }
 

@@ -1,4 +1,4 @@
-Player Highscore: 0
+Player Highscore: 393
 Coins: 0
 Purchased Skin Six: 0
 Purchased Skin Nine: 0
