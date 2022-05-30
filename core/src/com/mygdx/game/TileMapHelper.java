@@ -41,11 +41,11 @@ public class TileMapHelper {
         if (level == 1) {
             tiledMap = new TmxMapLoader().load("Levels/Level 1/Level1.tmx");
         } else if (level == 2) {
-
+            tiledMap = new TmxMapLoader().load("Levels/Level 2/Level2.tmx");
         } else if (level == 3) {
-
+            tiledMap = new TmxMapLoader().load("Levels/Level 3/Level3.tmx");
         } else if (level == 4) {
-
+            tiledMap = new TmxMapLoader().load("Levels/Level 4/Level4.tmx");
         }
         parseMapObjects(tiledMap.getLayers().get("Objects").getObjects());
         return new OrthogonalTiledMapRenderer(tiledMap);

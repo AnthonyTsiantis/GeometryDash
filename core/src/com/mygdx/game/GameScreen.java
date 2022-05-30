@@ -196,10 +196,28 @@ public class GameScreen extends ScreenAdapter {
         game.currentScore = ((int) this.player.xPos) / 10;
     }
 
+    public void createLevel() {
+        this.game.currentScore = 0;
+        this.collectedCoins = 0;
+        if (this.game.levelNum == 2) {
+            this.world = new World(new Vector2(900f, -65f), false); // y value is gravity
+        } else if (this.game.levelNum == 3) {
+            this.world = new World(new Vector2(1000f, -65f), false); // y value is gravity
+        } else if (this.game.levelNum == 4) {
+            this.world = new World(new Vector2(1100f, -65f), false); // y value is gravity
+        }
+        this.tileMapHelper = new TileMapHelper(this, this.game);
+        this.orthogonalTiledMapRenderer = tileMapHelper.setupMap(this.game.levelNum);
+        this.setFont();
+        this.counter = 0;
+    }
+
     private void createLevel2() {
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap(game.levelNum);
         this.world = new World(new Vector2(725f, -65f), false); // y value is gravity
         this.collectedCoins = 0;
+        this.contactListener = new ContactListener(this.game, this);
+        this.world.setContactListener(this.contactListener);
 
 
         this.game.audio.playMusic(game.currentScreen);

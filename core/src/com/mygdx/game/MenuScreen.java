@@ -102,7 +102,7 @@ public class MenuScreen implements Screen {
                 try {
                     this.game.storeData();
                 } catch (IOException e) {
-                    System.out.println("Trouble writing highscore...");
+                    System.out.println("Trouble writing data...");
                     e.printStackTrace();
                 }
                 this.game.dispose();

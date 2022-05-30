@@ -69,13 +69,17 @@ public class CompletedLevel implements Screen {
         int mouseX = Gdx.input.getX();
         int mouseY = Gdx.input.getY();
 
-        if (mouseX > this.NEXT_BUTTON_X && mouseX < this.NEXT_BUTTON_X + this.BUTTON_WIDTH && mouseY < this.game.heightScreen - this.BUTTON_Y && mouseY > this.game.heightScreen - (this.BUTTON_Y + this.BUTTON_HEIGHT)) {
+        if (this.game.levelNum != 4 && mouseX > this.NEXT_BUTTON_X && mouseX < this.NEXT_BUTTON_X + this.BUTTON_WIDTH && mouseY < this.game.heightScreen - this.BUTTON_Y && mouseY > this.game.heightScreen - (this.BUTTON_Y + this.BUTTON_HEIGHT)) {
             this.game.batch.draw(this.nextLevelOn, this.NEXT_BUTTON_X, this.BUTTON_Y, this.BUTTON_WIDTH, this.BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
-                // TODO Generate next level
+                this.game.levelNum += 1;
+                this.gameScreen.createLevel();
+
             }
         } else {
-            this.game.batch.draw(this.nextLevelOff, this.NEXT_BUTTON_X, this.BUTTON_Y, this.BUTTON_WIDTH, this.BUTTON_HEIGHT);
+            if (this.game.levelNum != 4) {
+                this.game.batch.draw(this.nextLevelOff, this.NEXT_BUTTON_X, this.BUTTON_Y, this.BUTTON_WIDTH, this.BUTTON_HEIGHT);
+            }
         }
 
         if (mouseX > this.BACK_BUTTON_X && mouseX < this.BACK_BUTTON_X + this.BUTTON_WIDTH && mouseY < this.game.heightScreen - this.BUTTON_Y && mouseY > this.game.heightScreen - (this.BUTTON_Y + this.BUTTON_HEIGHT)) {
