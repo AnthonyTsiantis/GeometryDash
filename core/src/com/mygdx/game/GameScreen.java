@@ -227,11 +227,9 @@ public class GameScreen extends ScreenAdapter {
         if(this.showCoin1) {
             //batch.draw(this.coin, 4290f, 590f);
         }
-
         if (this.showCoin2) {
             //batch.draw(this.coin, 8960f, 580f);
         }
-
         if (this.showCoin3) {
             //batch.draw(this.coin, 13375f, 840f);
         }
