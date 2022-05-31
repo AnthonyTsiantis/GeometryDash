@@ -146,7 +146,7 @@ public class GameScreen extends ScreenAdapter {
         this.game.reset();
         this.batch = new SpriteBatch();
         if (this.game.levelNum == 1) {
-            this.world = new World(new Vector2(10000f, -65f), false); //725f y value is gravity
+            this.world = new World(new Vector2(725f, -65f), false); // y value is gravity
             this.game.currentScreen = "Level 1";
         } else if (this.game.levelNum == 2) {
             this.world = new World(new Vector2(875f, -65f), false); // y value is gravity
