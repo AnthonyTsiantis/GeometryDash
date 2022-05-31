@@ -67,7 +67,7 @@ public class GameScreen extends ScreenAdapter {
 
     // Update method updates the game every frame (1/60)
     private void update() throws IOException {
-        world.step(1/60f, 6, 2);
+        world.step(1 / 60f, 6, 2);
 
         cameraUpdate();
 
@@ -198,7 +198,7 @@ public class GameScreen extends ScreenAdapter {
         batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
         batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);
 
-        if(this.showCoin1) {
+        if (this.showCoin1) {
             batch.draw(this.coin, 4290f, 590f);
         }
 
@@ -217,21 +217,24 @@ public class GameScreen extends ScreenAdapter {
         // Update Game Score
         game.currentScore = ((int) this.player.xPos) / 10;
     }
+
     private void renderLevel2() {
         this.levelFoundation();
+        this.checkObjectsLevel2();
         this.batch.begin();
         this.batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
+        System.out.println(this.game.playerSkin.getX() + " " + this.game.playerSkin.getY());
         batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);
 
         // TODO DISPLAY COINS
-        if(this.showCoin1) {
-            //batch.draw(this.coin, 4290f, 590f);
+        if (this.showCoin1) {
+            batch.draw(this.coin, 1344f, 450f);
         }
         if (this.showCoin2) {
-            //batch.draw(this.coin, 8960f, 580f);
+            batch.draw(this.coin, 5850f, 900f);
         }
         if (this.showCoin3) {
-            //batch.draw(this.coin, 13375f, 840f);
+            batch.draw(this.coin, 11080f, 960f);
         }
         this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
         this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
@@ -272,23 +275,25 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    public void checkObjectsLevel2() {
+        // Coin #1
+        if (this.player.xPos > 1344 && this.player.xPos < 1408 && this.player.yPos < 520 && this.player.yPos > 450 && this.showCoin1) {
+            this.showCoin1 = false;
+            this.collectedCoins++;
+        } else if (this.player.xPos < 5950 && this.player.xPos > 5850 && this.player.yPos < 1100 && this.player.yPos > 900 && this.showCoin2) { // Coin #2
+            this.showCoin2 = false;
+            this.collectedCoins++;
+        } else if (this.player.xPos > 11080 && this.player.xPos < 11144 && this.player.yPos < 1100 && this.player.yPos > 960 && this.showCoin3) { // Coin #3
+            this.showCoin3 = false;
+            this.collectedCoins++;
+        }
+    }
+
     public void checkGame() {
         if (this.player.xPos > 15260) { // Flag
             this.game.audio.stopMusic(game.currentScreen);
             this.completedLevel = new CompletedLevel(this.game, this);
             this.game.setScreen(this.completedLevel);
         }
-    }
-
-    public void checkObjectsLevel2() {
-
-    }
-
-    public void checkObjectsLevel3() {
-
-    }
-
-    public void checkObjectsLevel4() {
-
     }
 }

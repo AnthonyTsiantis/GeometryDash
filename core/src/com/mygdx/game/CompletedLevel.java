@@ -25,7 +25,6 @@ public class CompletedLevel implements Screen {
         this.game = game;
         this.gameScreen = gameScreen;
         this.game.wealth += this.gameScreen.collectedCoins;
-        this.gameScreen.collectedCoins = 0;
         this.victoryScreen = new Texture("FlashScreens/Victory/Victory Screen.png");
         this.nextLevelOff = new Texture("FlashScreens/Victory/Next Level Off.png");
         this.nextLevelOn = new Texture("FlashScreens/Victory/Next Level On.png");
