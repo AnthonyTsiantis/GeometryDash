@@ -5,7 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 public class AudioManager {
-    public Music lobbyMusic, level1Music, gameOverMusic;
+    public Music lobbyMusic, level1Music, level2Music, gameOverMusic;
     public Sound jumpSFX;
     private long jumpID, gameOverID;
     private Boot game;
@@ -22,6 +22,11 @@ public class AudioManager {
         this.level1Music.setLooping(true);
         this.level1Music.play();
         this.level1Music.pause();
+        this.level2Music = Gdx.audio.newMusic(Gdx.files.internal("audio/Subwoofer Lullaby.mp3"));
+        this.level2Music.setVolume(game.gameVolume);
+        this.level2Music.setLooping(true);
+        this.level2Music.play();
+        this.level2Music.pause();
         this.gameOverMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/Game Over.wav"));
         this.gameOverMusic.setVolume(game.gameVolume);
         this.gameOverMusic.setLooping(false);
@@ -38,6 +43,9 @@ public class AudioManager {
             case "Level 1":
                 this.level1Music.play();
                 break;
+            case "Level 2":
+                this.level2Music.play();
+                break;
             case "Game Over":
                 this.gameOverMusic.play();
                 break;
@@ -52,6 +60,8 @@ public class AudioManager {
             case "Level 1":
                 this.level1Music.stop();
                 break;
+            case "Level 2":
+                this.level2Music.stop();
             case "Game Over":
                 this.gameOverMusic.stop();
         }

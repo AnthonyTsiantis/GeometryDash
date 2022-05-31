@@ -149,7 +149,7 @@ public class GameScreen extends ScreenAdapter {
             this.world = new World(new Vector2(10000f, -65f), false); //725f y value is gravity
             this.game.currentScreen = "Level 1";
         } else if (this.game.levelNum == 2) {
-            this.world = new World(new Vector2(900f, -65f), false); // y value is gravity
+            this.world = new World(new Vector2(875f, -65f), false); // y value is gravity
             this.game.currentScreen = "Level 2";
         } else if (this.game.levelNum == 3) {
             this.world = new World(new Vector2(1000f, -65f), false); // y value is gravity
@@ -223,6 +223,7 @@ public class GameScreen extends ScreenAdapter {
         this.batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
         batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);
 
+        // TODO DISPLAY COINS
         if(this.showCoin1) {
             //batch.draw(this.coin, 4290f, 590f);
         }
@@ -275,7 +276,6 @@ public class GameScreen extends ScreenAdapter {
 
     public void checkGame() {
         if (this.player.xPos > 15260) { // Flag
-            this.counter = 0;
             this.game.audio.stopMusic(game.currentScreen);
             this.completedLevel = new CompletedLevel(this.game, this);
             this.game.setScreen(this.completedLevel);
