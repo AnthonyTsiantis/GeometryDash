@@ -46,7 +46,7 @@ public class Boot extends Game {
 		this.heightScreen = 720;
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false,  widthScreen, heightScreen);
-		this.levelNum = 2;
+		this.levelNum = 1;
 		this.currentScore = 0;
 		this.data = new int[4];
 		try {

@@ -43,9 +43,9 @@ public class TileMapHelper {
         } else if (level == 2) {
             tiledMap = new TmxMapLoader().load("Levels/Level 2/Level 2.tmx");
         } else if (level == 3) {
-            //tiledMap = new TmxMapLoader().load("Levels/Level 3/Level3.tmx");
+            tiledMap = new TmxMapLoader().load("Levels/Level 3/level3.tmx");
         } else if (level == 4) {
-            //tiledMap = new TmxMapLoader().load("Levels/Level 4/Level4.tmx");
+            tiledMap = new TmxMapLoader().load("Levels/Level 4/level4.tmx");
         }
         parseMapObjects(tiledMap.getLayers().get("Objects").getObjects());
         return new OrthogonalTiledMapRenderer(tiledMap);
