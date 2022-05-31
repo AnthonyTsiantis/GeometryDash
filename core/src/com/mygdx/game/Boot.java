@@ -59,7 +59,7 @@ public class Boot extends Game {
 		this.wealth = this.data[1];
 		this.purchased6 = this.data[2] == 1;
 		this.purchased9 = this.data[3] == 1;
-		batch = new SpriteBatch();
+		this.batch = new SpriteBatch();
 		this.fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/impact.ttf"));
 		this.setScreen(new MenuScreen(this));
 		this.currentScreen = "Menu Screen";
@@ -70,6 +70,14 @@ public class Boot extends Game {
 		this.playerSkin3 = new Sprite(new Texture("Skins/Character 3.png"));
 		this.playerSkinID = 1;
 		this.playerSkin = this.playerSkin1;
+	}
+
+	public void reset() {
+		this.camera = new OrthographicCamera();
+		this.camera.setToOrtho(false,  widthScreen, heightScreen);
+		this.currentScore = 0;
+		this.currentScreen = "Level " + this.levelNum;
+		this.audio.playMusic(this.currentScreen);
 	}
 
 	public void setSkin(int skinID) {

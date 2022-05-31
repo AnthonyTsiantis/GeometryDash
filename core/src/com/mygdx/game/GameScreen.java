@@ -24,7 +24,6 @@ public class GameScreen extends ScreenAdapter {
     private OrthographicCamera camera;
     public SpriteBatch batch;
     private World world;
-    private Box2DDebugRenderer box2DDebugRenderer;
     public static final float PPM = 32.0f;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
@@ -39,7 +38,7 @@ public class GameScreen extends ScreenAdapter {
     public int collectedCoins;
     public FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
     private int counter;
-    private Texture level1Flash;
+    private Texture level1Flash, level2Flash, level3Flash, level4Flash;
     private CompletedLevel completedLevel;
 
 
@@ -50,20 +49,11 @@ public class GameScreen extends ScreenAdapter {
         this.batch = new SpriteBatch();
         this.victoryFlag = new Sprite(new Texture("Levels/Other/Victory Flag.png"));
         this.coin = new Sprite(new Texture("Levels/Other/coin.png"));
-        this.world = new World(new Vector2(725f, -65f), false); // y value is gravity
-        this.contactListener = new ContactListener(this.game, this);
-        this.world.setContactListener(this.contactListener);
-        this.box2DDebugRenderer = new Box2DDebugRenderer();
-        this.tileMapHelper = new TileMapHelper(this, this.game);
-        this.orthogonalTiledMapRenderer = tileMapHelper.setupMap(game.levelNum);
-        this.game.currentScore = 0;
-        this.showCoin1 = true;
-        this.showCoin2 = true;
-        this.showCoin3 = true;
-        this.collectedCoins = 0;
-        this.setFont();
-        this.counter = 0;
         this.level1Flash = new Texture("Levels/Level 1/Level 1 Flashscreen.png");
+        this.level2Flash = new Texture("Levels/Level 2/Level 2 Flash.png");
+        this.level3Flash = new Texture("Levels/Level 3/Level 3 Flash.png");
+        this.level4Flash = new Texture("Levels/Level 4/Level 4 Flash.png");
+        this.createLevel();
     }
 
     private void setFont() {
@@ -107,60 +97,97 @@ public class GameScreen extends ScreenAdapter {
     // Render method, renders game
     @Override
     public void render(float delta) {
+        // Clear screen
+        Gdx.gl.glClearColor(0.25f, 0.25f, 0.5f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         if (this.counter < 100) {
-            // Clear screen
-            Gdx.gl.glClearColor(0.25f, 0.25f, 0.5f, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             this.batch.begin();
             if (game.levelNum == 1) {
                 this.batch.draw(this.level1Flash, 0, 0, 1280, 720);
             } else if (game.levelNum == 2) {
-
+                this.batch.draw(this.level2Flash, 0, 0, 1280, 720);
             } else if (game.levelNum == 3) {
-
+                this.batch.draw(this.level3Flash, 0, 0, 1280, 720);
             } else if (game.levelNum == 4) {
-
+                this.batch.draw(this.level4Flash, 0, 0, 1280, 720);
             }
             this.batch.end();
             this.counter++;
         } else if (counter == 100) {
-            this.game.currentScreen = "Level 1";
+            if (this.game.levelNum == 1) {
+                this.game.currentScreen = "Level 1";
+            } else if (this.game.levelNum == 2) {
+                this.game.currentScreen = "Level 2";
+            } else if (this.game.levelNum == 3) {
+                this.game.currentScreen = "Level 3";
+            } else if (this.game.levelNum == 4) {
+                this.game.currentScreen = "Level 4";
+            }
             this.game.audio.playMusic(this.game.currentScreen);
             this.counter++;
         } else {
+            // Set skin position the same as player position
+            this.game.playerSkin.setPosition((this.player.xPos) - 32, (this.player.yPos) - 32);
             if (game.levelNum == 1) {
                 this.renderLevel1();
             } else if (game.levelNum == 2) {
                 this.renderLevel2();
             } else if (game.levelNum == 3) {
-
+                this.renderLevel3();
             } else if (game.levelNum == 4) {
-
+                this.renderLevel4();
             }
         }
-
+        this.checkGame();
     }
 
+    public void createLevel() {
+        this.game.reset();
+        this.batch = new SpriteBatch();
+        if (this.game.levelNum == 1) {
+            this.world = new World(new Vector2(10000f, -65f), false); //725f y value is gravity
+            this.game.currentScreen = "Level 1";
+        } else if (this.game.levelNum == 2) {
+            this.world = new World(new Vector2(900f, -65f), false); // y value is gravity
+            this.game.currentScreen = "Level 2";
+        } else if (this.game.levelNum == 3) {
+            this.world = new World(new Vector2(1000f, -65f), false); // y value is gravity
+            this.game.currentScreen = "Level 3";
+        } else if (this.game.levelNum == 4) {
+            this.world = new World(new Vector2(1100f, -65f), false); // y value is gravity
+            this.game.currentScreen = "Level 4";
+        }
+
+        this.contactListener = new ContactListener(this.game, this);
+        this.world.setContactListener(this.contactListener);
+        this.tileMapHelper = new TileMapHelper(this, this.game);
+        this.orthogonalTiledMapRenderer = tileMapHelper.setupMap(game.levelNum);
+        this.showCoin1 = true;
+        this.showCoin2 = true;
+        this.showCoin3 = true;
+        this.collectedCoins = 0;
+        this.counter = 0;
+        this.setFont();
+    }
+
+
     public void levelFoundation() {
+        // Clear screen
+        Gdx.gl.glClearColor(0.25f, 0.25f, 0.5f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         // Call update method
         try {
             this.update();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // Clear screen
-        Gdx.gl.glClearColor(0.25f, 0.25f, 0.5f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // render map
         orthogonalTiledMapRenderer.render();
-
-        // Set skin position the same as player position
-        this.game.playerSkin.setPosition((this.player.xPos) - 32, (this.player.yPos) - 32);
-
-        // set camera
-        batch.setProjectionMatrix(camera.combined);
     }
+
 
     public void renderLevel1() {
         this.levelFoundation();
@@ -169,7 +196,7 @@ public class GameScreen extends ScreenAdapter {
         // begin batch
         batch.begin();
         batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
-        batch.draw(this.victoryFlag, 15260f, 375f, 128, 128);
+        batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);
 
         if(this.showCoin1) {
             batch.draw(this.coin, 4290f, 590f);
@@ -187,48 +214,26 @@ public class GameScreen extends ScreenAdapter {
         this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
 
         batch.end();
-        // Render World
-
-        // TODO Comment this out to get rid of map boundaries
-        //  box2DDebugRenderer.render(world, camera.combined.scl(PPM));
-
         // Update Game Score
         game.currentScore = ((int) this.player.xPos) / 10;
     }
-
-    public void createLevel() {
-        this.game.currentScore = 0;
-        this.collectedCoins = 0;
-        if (this.game.levelNum == 2) {
-            this.world = new World(new Vector2(900f, -65f), false); // y value is gravity
-        } else if (this.game.levelNum == 3) {
-            this.world = new World(new Vector2(1000f, -65f), false); // y value is gravity
-        } else if (this.game.levelNum == 4) {
-            this.world = new World(new Vector2(1100f, -65f), false); // y value is gravity
-        }
-        this.tileMapHelper = new TileMapHelper(this, this.game);
-        this.orthogonalTiledMapRenderer = tileMapHelper.setupMap(this.game.levelNum);
-        this.setFont();
-        this.counter = 0;
-    }
-
-    private void createLevel2() {
-        this.orthogonalTiledMapRenderer = tileMapHelper.setupMap(game.levelNum);
-        this.world = new World(new Vector2(725f, -65f), false); // y value is gravity
-        this.collectedCoins = 0;
-        this.contactListener = new ContactListener(this.game, this);
-        this.world.setContactListener(this.contactListener);
-
-
-        this.game.audio.playMusic(game.currentScreen);
-    }
-
     private void renderLevel2() {
         this.levelFoundation();
         this.batch.begin();
-        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
+        this.batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
+        batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);
 
+        if(this.showCoin1) {
+            //batch.draw(this.coin, 4290f, 590f);
+        }
 
+        if (this.showCoin2) {
+            //batch.draw(this.coin, 8960f, 580f);
+        }
+
+        if (this.showCoin3) {
+            //batch.draw(this.coin, 13375f, 840f);
+        }
         this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
         this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
         this.batch.end();
@@ -236,32 +241,12 @@ public class GameScreen extends ScreenAdapter {
         game.currentScore = ((int) this.player.xPos) / 10;
     }
 
-    private void level3() {
-        this.levelFoundation();
-        this.batch.begin();
-        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
+    private void renderLevel3() {
 
-
-
-        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
-        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
-        this.batch.end();
-        // Update Game Score
-        game.currentScore = ((int) this.player.xPos) / 10;
     }
 
-    private void level4() {
-        this.levelFoundation();
-        this.batch.begin();
-        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
+    private void renderLevel4() {
 
-
-
-        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
-        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
-        this.batch.end();
-        // Update Game Score
-        game.currentScore = ((int) this.player.xPos) / 10;
     }
 
     // getWorld method returns this class' world
@@ -285,7 +270,11 @@ public class GameScreen extends ScreenAdapter {
         } else if (this.player.xPos > 13375 && this.player.xPos < 13440 && this.player.yPos < 950 && this.player.yPos > 840 && this.showCoin3) { // Coin #3
             this.showCoin3 = false;
             this.collectedCoins++;
-        } else if (this.player.xPos > 15260) { // Flag
+        }
+    }
+
+    public void checkGame() {
+        if (this.player.xPos > 15260) { // Flag
             this.counter = 0;
             this.game.audio.stopMusic(game.currentScreen);
             this.completedLevel = new CompletedLevel(this.game, this);

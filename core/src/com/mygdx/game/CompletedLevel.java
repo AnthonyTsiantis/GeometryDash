@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -74,7 +75,7 @@ public class CompletedLevel implements Screen {
             if (Gdx.input.isTouched()) {
                 this.game.levelNum += 1;
                 this.gameScreen.createLevel();
-
+                this.game.setScreen(this.gameScreen);
             }
         } else {
             if (this.game.levelNum != 4) {
