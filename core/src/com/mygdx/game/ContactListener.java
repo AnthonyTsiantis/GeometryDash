@@ -34,8 +34,18 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
 
             // Box
             if (id == 2) {
-                float playerYPos = a.getBody().getPosition().y * PPM;
-                float objectYPos = (b.getBody().getPosition().y + BOX_HEIGHT) * PPM;
+                float tempA = a.getBody().getPosition().y;
+                float tempB = b.getBody().getPosition().y;
+                float playerYPos;
+                float objectYPos;
+                if (tempA < tempB) {
+                    playerYPos = tempB * PPM;
+                    objectYPos = (tempA + BOX_HEIGHT) * PPM;
+                } else {
+                    playerYPos = (tempA + BOX_HEIGHT) * PPM;
+                    objectYPos = tempB * PPM;
+                }
+
 
                 if (playerYPos < objectYPos) {
                     this.endGame();

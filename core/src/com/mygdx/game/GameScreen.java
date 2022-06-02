@@ -155,7 +155,7 @@ public class GameScreen extends ScreenAdapter {
             this.world = new World(new Vector2(1000f, -65f), false); // y value is gravity
             this.game.currentScreen = "Level 3";
         } else if (this.game.levelNum == 4) {
-            this.world = new World(new Vector2(1100f, -125f), false); // y value is gravity
+            this.world = new World(new Vector2(1150f, -100f), false); // y value is gravity
             this.game.currentScreen = "Level 4";
         }
 
@@ -195,7 +195,7 @@ public class GameScreen extends ScreenAdapter {
 
         // begin batch
         batch.begin();
-        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY() + 5);
+        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
         batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);
 
         if (this.showCoin1) {
@@ -223,7 +223,6 @@ public class GameScreen extends ScreenAdapter {
         this.checkObjectsLevel2();
         this.batch.begin();
         this.batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
-        System.out.println(this.game.playerSkin.getX() + " " + this.game.playerSkin.getY());
         batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);
 
         if (this.showCoin1) {
@@ -254,17 +253,19 @@ public class GameScreen extends ScreenAdapter {
         batch.begin();
         batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
         batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);
+        System.out.println(this.player.xPos + " " + this.player.yPos);
 
+        // TODO render coins
         if (this.showCoin1) {
-            //batch.draw(this.coin, 4290f, 590f);
+            batch.draw(this.coin, 5000, 770);
         }
 
         if (this.showCoin2) {
-            //batch.draw(this.coin, 8960f, 580f);
+            batch.draw(this.coin, 9920, 460);
         }
 
         if (this.showCoin3) {
-            //batch.draw(this.coin, 13375f, 840f);
+            batch.draw(this.coin, 12290, 575);
         }
 
         this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
@@ -318,7 +319,17 @@ public class GameScreen extends ScreenAdapter {
     }
 
     public void checkObjectsLevel4() {
-
+        // Coin #1
+        if (this.player.xPos > 5000 && this.player.xPos < 5100 && this.player.yPos < 880 && this.player.yPos > 770 && this.showCoin1) {
+            this.showCoin1 = false;
+            this.collectedCoins++;
+        } else if (this.player.xPos > 9920 && this.player.xPos < 10000 && this.player.yPos < 550 && this.player.yPos > 455 && this.showCoin2) { // Coin #2
+            this.showCoin2 = false;
+            this.collectedCoins++;
+        } else if (this.player.xPos > 12290 && this.player.xPos < 12400 && this.player.yPos < 700 && this.player.yPos > 570 && this.showCoin3) { // Coin #3
+            this.showCoin3 = false;
+            this.collectedCoins++;
+        }
     }
 
     public void checkGame() {
