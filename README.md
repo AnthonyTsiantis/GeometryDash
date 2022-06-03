@@ -3,8 +3,8 @@
 
 ### About
 This game was created for St. Michael's College School as a final summative assignment.
-This game is a partial clone of the popular game Geometry Dash.
+This game is a partial clone of the popular game Geometry Dash, however, absolutely no code was copied from the game.
 
 <hr>
-####Disclaimer
+Disclaimer
 *We do not claim, or own the rights of in-game music and sound effects.*
