@@ -110,7 +110,7 @@
   <object id="28" name="triangle" x="1472" y="576">
    <polygon points="0,0 31.9565,-64 64,0"/>
   </object>
-  <object id="30" name="player" x="1728" y="832" width="64" height="64"/>
+  <object id="30" name="player" x="640" y="832" width="64" height="64"/>
   <object id="31" name="support" x="2816" y="704">
    <polygon points="0,0 128,0 128,192 0,192"/>
   </object>
