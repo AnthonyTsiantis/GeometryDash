@@ -85,7 +85,12 @@ public class MenuScreen implements Screen {
             this.game.batch.draw(playButtonActive, xButtonOffset, playButtonY, BUTTON_WIDTH, BUTTON_HEIGHT);
             // If the button is clicked, start the game
             if (Gdx.input.isTouched()) {
-                this.game.audio.stopMusic(this.game.currentScreen);
+                // Add delay so no double click
+                long startTime = System.currentTimeMillis();
+                long time = 0;
+                while(time < startTime + 50) {
+                    time = System.currentTimeMillis();
+                }
                 this.game.setScreen(new LevelMenu(this.game));
             }
 

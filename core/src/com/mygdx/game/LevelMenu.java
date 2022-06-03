@@ -142,6 +142,6 @@ public class LevelMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        this.game.audio.stopMusic(this.game.currentScreen);
     }
 }

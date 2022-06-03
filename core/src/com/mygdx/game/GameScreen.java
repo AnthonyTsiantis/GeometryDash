@@ -41,6 +41,8 @@ public class GameScreen extends ScreenAdapter {
     private Texture level1Flash, level2Flash, level3Flash, level4Flash;
     private CompletedLevel completedLevel;
 
+    private Sprite backgroundSprite;
+
 
     // GameScreen constructor creates a new game with an OrthographicCamera as a parameter
     public GameScreen(Boot game, OrthographicCamera camera) {
@@ -148,15 +150,19 @@ public class GameScreen extends ScreenAdapter {
         if (this.game.levelNum == 1) {
             this.world = new World(new Vector2(725f, -65f), false); // y value is gravity
             this.game.currentScreen = "Level 1";
+            this.backgroundSprite = new Sprite(new Texture("Levels/Level 1/level1 bg.png"));
         } else if (this.game.levelNum == 2) {
             this.world = new World(new Vector2(875f, -65f), false); // y value is gravity
             this.game.currentScreen = "Level 2";
+            this.backgroundSprite = new Sprite(new Texture("Levels/Level 2/level2 bg.png"));
         } else if (this.game.levelNum == 3) {
             this.world = new World(new Vector2(1000f, -90f), false); // y value is gravity
             this.game.currentScreen = "Level 3";
+            this.backgroundSprite = new Sprite(new Texture("Levels/Level 3/level3 bg.png"));
         } else if (this.game.levelNum == 4) {
             this.world = new World(new Vector2(1150f, -100f), false); // y value is gravity
             this.game.currentScreen = "Level 4";
+            this.backgroundSprite = new Sprite(new Texture("Levels/Level 4/level4 bg.png"));
         }
 
         this.contactListener = new ContactListener(this.game, this);
@@ -183,6 +189,11 @@ public class GameScreen extends ScreenAdapter {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // draw background
+        batch.begin();
+        batch.draw(this.backgroundSprite, this.player.xPos - (int) (game.widthScreen / 2), this.player.yPos - (int) (game.heightScreen / 2), game.widthScreen, game.heightScreen);
+        batch.end();
 
         // render map
         orthogonalTiledMapRenderer.render();
