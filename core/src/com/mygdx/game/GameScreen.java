@@ -266,7 +266,7 @@ public class GameScreen extends ScreenAdapter {
         }
 
         if (this.showCoin2) {
-            batch.draw(this.coin, 10280, 440);
+            batch.draw(this.coin, 10280, 500);
         }
 
         if (this.showCoin3) {
@@ -353,7 +353,7 @@ public class GameScreen extends ScreenAdapter {
         if (this.player.xPos > 3145 && this.player.xPos < 3250 && this.player.yPos < 800 && this.player.yPos > 695 && this.showCoin1) {
             this.showCoin1 = false;
             this.collectedCoins++;
-        } else if (this.player.xPos < 10400 && this.player.xPos > 10280 && this.player.yPos < 550 && this.player.yPos > 430 && this.showCoin2) { // Coin #2
+        } else if (this.player.xPos < 10400 && this.player.xPos > 10280 && this.player.yPos < 600 && this.player.yPos > 500 && this.showCoin2) { // Coin #2
             this.showCoin2 = false;
             this.collectedCoins++;
         } else if (this.player.xPos > 12620 && this.player.xPos < 12700 && this.player.yPos < 780 && this.player.yPos > 650 && this.showCoin3) { // Coin #3
