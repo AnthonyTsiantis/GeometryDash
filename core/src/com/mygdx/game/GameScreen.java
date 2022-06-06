@@ -33,14 +33,12 @@ public class GameScreen extends ScreenAdapter {
     private Player player;
     public Sprite victoryFlag, coin;
     private Boot game;
-
     public boolean showCoin1, showCoin2, showCoin3;
     public int collectedCoins;
     public FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
     private int counter;
     private Texture level1Flash, level2Flash, level3Flash, level4Flash;
     private CompletedLevel completedLevel;
-
     private Sprite backgroundSprite;
 
 
@@ -58,6 +56,7 @@ public class GameScreen extends ScreenAdapter {
         this.createLevel();
     }
 
+    // Set font parameters portraying to this class
     private void setFont() {
         this.fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         this.fontParameter.size = 25;
@@ -67,18 +66,16 @@ public class GameScreen extends ScreenAdapter {
         this.game.font = this.game.fontGenerator.generateFont(this.fontParameter);
     }
 
-    // Update method updates the game every frame (1/60)
+    // Update method updates the game every frame 60 frames per second or (1/60 in hertz)
     private void update() throws IOException {
         world.step(1 / 60f, 6, 2);
-
+        // Update camera
         cameraUpdate();
-
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
-        player.update();
+        player.update(); // Update player
 
-        //TODO
-        // IF ESCAPE IS PRESSED AND NOT IN MAIN MENU DISPLAY PAUSE MENU, ELSE QUIT
+        // If escape is pressed exit to main menu
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             this.game.audio.stopMusic(game.currentScreen);
             this.game.currentScreen = "Menu Screen";
@@ -103,6 +100,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        // For the first 100 frames, display the level flash screen
         if (this.counter < 100) {
             this.batch.begin();
             if (game.levelNum == 1) {
@@ -116,6 +114,7 @@ public class GameScreen extends ScreenAdapter {
             }
             this.batch.end();
             this.counter++;
+        // On the 100th frame, update the screen name
         } else if (counter == 100) {
             if (this.game.levelNum == 1) {
                 this.game.currentScreen = "Level 1";
@@ -128,6 +127,8 @@ public class GameScreen extends ScreenAdapter {
             }
             this.game.audio.playMusic(this.game.currentScreen);
             this.counter++;
+
+        // On every other frame afterwards, set the player skin position and render the level
         } else {
             // Set skin position the same as player position
             this.game.playerSkin.setPosition((this.player.xPos) - 32, (this.player.yPos) - 32);
@@ -141,9 +142,10 @@ public class GameScreen extends ScreenAdapter {
                 this.renderLevel4();
             }
         }
-        this.checkGame();
+        this.checkGame(); // Also, check if the player has completed the level
     }
 
+    // Create level method is used to reinitialize class variables for each level.
     public void createLevel() {
         this.game.reset();
         this.batch = new SpriteBatch();
@@ -177,7 +179,7 @@ public class GameScreen extends ScreenAdapter {
         this.setFont();
     }
 
-
+    // Level foundation method is used to create the foundation for rendering a level
     public void levelFoundation() {
         // Clear screen
         Gdx.gl.glClearColor(0.25f, 0.25f, 0.5f, 1);
@@ -199,16 +201,18 @@ public class GameScreen extends ScreenAdapter {
         orthogonalTiledMapRenderer.render();
     }
 
-
+    // Render level 1 method is used to render level 1
     public void renderLevel1() {
+        // Call level foundation methods
         this.levelFoundation();
         this.checkObjectsLevel1();
 
         // begin batch
         batch.begin();
-        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
-        batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);
+        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY()); // Dray player skin
+        batch.draw(this.victoryFlag, 15260f, 350f, 128, 128); // Draw flag
 
+        // Determine if coins should be displayed
         if (this.showCoin1) {
             batch.draw(this.coin, 4290f, 590f);
         }
@@ -221,21 +225,26 @@ public class GameScreen extends ScreenAdapter {
             batch.draw(this.coin, 13375f, 840f);
         }
 
-        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
-        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
+        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350); // Draw current score
+        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325); // Draw coins collected
 
-        batch.end();
+        batch.end(); // End game batch
+
         // Update Game Score
         game.currentScore = ((int) this.player.xPos) / 10;
     }
 
+    // Render level 2 method is used to render level 2
     private void renderLevel2() {
+        // Call level foundation methods
         this.levelFoundation();
         this.checkObjectsLevel2();
+        // begin batch
         this.batch.begin();
-        this.batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
-        batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);
+        this.batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY()); // Dray player skin
+        batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);  // Draw flag
 
+        // Determine if coins should be displayed
         if (this.showCoin1) {
             batch.draw(this.coin, 1344f, 450f);
         }
@@ -245,22 +254,27 @@ public class GameScreen extends ScreenAdapter {
         if (this.showCoin3) {
             batch.draw(this.coin, 11080f, 960f);
         }
-        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
-        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
-        this.batch.end();
+
+        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350); // Draw current score
+        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325); // Draw coins collected
+        this.batch.end(); // end batch
+
         // Update Game Score
         game.currentScore = ((int) this.player.xPos) / 10;
     }
 
+    // Render level 3 method is used to render level 3
     private void renderLevel3() {
+        // Call level foundation methods
         this.levelFoundation();
         this.checkObjectsLevel3();
 
         // begin batch
         batch.begin();
-        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
-        batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);
+        batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY()); // Draw player skin
+        batch.draw(this.victoryFlag, 15260f, 350f, 128, 128); // Draw game flag
 
+        // Determine if coins should be displayed
         if (this.showCoin1) {
             batch.draw(this.coin, 3145, 700);
         }
@@ -273,15 +287,18 @@ public class GameScreen extends ScreenAdapter {
             batch.draw(this.coin, 12620, 650);
         }
 
-        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
-        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
+        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350); // Draw current score
+        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325); // Draw coins collected
 
-        batch.end();
+        batch.end(); // end batch
+
         // Update Game Score
         game.currentScore = ((int) this.player.xPos) / 10;
     }
 
+    // Render level 4 method is used to render level 4
     private void renderLevel4() {
+        // Call level foundation methods
         this.levelFoundation();
         this.checkObjectsLevel4();
 
@@ -290,6 +307,7 @@ public class GameScreen extends ScreenAdapter {
         batch.draw(this.game.playerSkin, this.game.playerSkin.getX(), this.game.playerSkin.getY());
         batch.draw(this.victoryFlag, 15260f, 350f, 128, 128);
 
+        // Determine if coins should be displayed
         if (this.showCoin1) {
             batch.draw(this.coin, 5000, 770);
         }
@@ -302,10 +320,11 @@ public class GameScreen extends ScreenAdapter {
             batch.draw(this.coin, 12290, 575);
         }
 
-        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350);
-        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325);
+        this.game.font.draw(batch, "Current Score: " + this.game.currentScore, this.player.xPos - 635, this.player.yPos + 350); // Draw current score
+        this.game.font.draw(batch, "Coins Collected: " + this.collectedCoins + "/3", this.player.xPos - 635, this.player.yPos + 325); // Draw coins collected
 
-        batch.end();
+        batch.end(); // End batch
+
         // Update Game Score
         game.currentScore = ((int) this.player.xPos) / 10;
     }
@@ -320,12 +339,13 @@ public class GameScreen extends ScreenAdapter {
         this.player = player;
     }
 
+    // Check objects and update boolean for level 1
     public void checkObjectsLevel1() {
         // Coin #1
         if (this.player.xPos > 4290 && this.player.xPos < 4334 && this.player.yPos < 740 && this.player.yPos > 590 && this.showCoin1) {
             this.showCoin1 = false;
             this.collectedCoins++;
-        } else if (this.player.xPos < 9024 && this.player.xPos > 8960 && this.player.yPos < 650 && this.player.yPos > 560 && this.showCoin2) { // Coin #2
+        } else if (this.player.xPos < 9024 && this.player.xPos > 8960 && this.player.yPos < 700 && this.player.yPos > 560 && this.showCoin2) { // Coin #2
             this.showCoin2 = false;
             this.collectedCoins++;
         } else if (this.player.xPos > 13375 && this.player.xPos < 13440 && this.player.yPos < 950 && this.player.yPos > 840 && this.showCoin3) { // Coin #3
@@ -334,6 +354,7 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    // Check objects and update boolean for level 2
     public void checkObjectsLevel2() {
         // Coin #1
         if (this.player.xPos > 1344 && this.player.xPos < 1408 && this.player.yPos < 520 && this.player.yPos > 450 && this.showCoin1) {
@@ -348,6 +369,7 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    // Check objects and update boolean for level 3
     public void checkObjectsLevel3() {
         // Coin #1
         if (this.player.xPos > 3145 && this.player.xPos < 3250 && this.player.yPos < 800 && this.player.yPos > 695 && this.showCoin1) {
@@ -362,6 +384,7 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    // Check objects and update boolean for level 4
     public void checkObjectsLevel4() {
         // Coin #1
         if (this.player.xPos > 5000 && this.player.xPos < 5100 && this.player.yPos < 880 && this.player.yPos > 770 && this.showCoin1) {
@@ -376,9 +399,11 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
+    // Check if player has completed the level
     public void checkGame() {
-        if (this.player.xPos > 15260) { // Flag
+        if (this.player.xPos > 15260) { // Flag Position
             this.game.audio.stopMusic(game.currentScreen);
+            this.game.currentScreen = "Victory";
             this.completedLevel = new CompletedLevel(this.game, this);
             this.game.setScreen(this.completedLevel);
         }

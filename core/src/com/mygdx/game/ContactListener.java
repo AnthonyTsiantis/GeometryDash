@@ -1,26 +1,34 @@
 package com.mygdx.game;
-import Objects.Player.Player;
+
 import com.badlogic.gdx.physics.box2d.*;
 import java.io.IOException;
 
 import static com.mygdx.game.GameScreen.PPM;
 
+// Contact listener class used to determine player collisions
 public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactListener {
-    Boot game;
-    GameScreen screen;
+    // Initialize class variables
+    public Boot game;
+    public GameScreen screen;
     private final float BOX_HEIGHT = 15.005f;
 
+    // Constructor class populates variables
     public ContactListener(Boot game, GameScreen screen) {
         this.game = game;
         this.screen = screen;
     }
 
+    // Begin contact method is called when a collision is detected between two bodies
     @Override
     public void beginContact(Contact contact) {
-        Fixture a = contact.getFixtureA(); // Object Body
-        Fixture b = contact.getFixtureB(); // Player Body
+        // Get the fixtures of body a and body b
+        Fixture a = contact.getFixtureA();
+        Fixture b = contact.getFixtureB();
 
+        // Create id variable used to keep track of object (triangle, box, ground, support)
         short id;
+
+        // Determine which box is the player and which is the object
         if (a != null && b != null ) {
             Filter aData = a.getFilterData();
             Filter bData = b.getFilterData();
@@ -32,11 +40,11 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
                 id = 0;
             }
 
-            // Box
+            // Box Collision
             if (id == 2) {
+                // Get the position of player and object
                 float tempA = a.getBody().getPosition().y;
                 float tempB = b.getBody().getPosition().y;
-                System.out.println(tempA + " " + tempB);
                 float playerYPos;
                 float objectYPos;
                 if (tempA < tempB) {
@@ -46,19 +54,20 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
                     playerYPos = tempA * PPM;
                     objectYPos = (tempB + BOX_HEIGHT) * PPM;
                 }
-                System.out.println(playerYPos + " " + objectYPos);
 
-
+                // Determine if player box collision is valid
                 if (playerYPos < objectYPos) {
                     this.endGame();
                 }
 
+            // Triangle and support collision
             } else if (id == 4 || id == 16) {
                 this.endGame();
             }
         }
     }
 
+    // End game method calls the end game screen
     private void endGame() {
         this.game.wealth += this.screen.collectedCoins;
         game.audio.stopMusic(game.currentScreen);

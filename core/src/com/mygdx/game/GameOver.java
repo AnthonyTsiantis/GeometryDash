@@ -9,16 +9,19 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import java.io.IOException;
 
+// Game Over class is used to display game over screen
 public class GameOver extends ScreenAdapter {
+    // Initialize class variables
     private Boot game;
-    Texture gameOverBackground;
-    Texture backButtonActive;
-    Texture backButtonInactive;
+    private Texture gameOverBackground;
+    private Texture backButtonActive;
+    private Texture backButtonInactive;
     private static final int BACK_BUTTON_WIDTH = 150;
     private static final int BACK_BUTTON_HEIGHT = 75;
     public FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
 
 
+    // Constructor Class used to instantiate screen and update variables
     public GameOver(Boot game) throws IOException {
         this.game = game;
         gameOverBackground = new Texture("FlashScreens/GameOver.png");
@@ -30,6 +33,7 @@ public class GameOver extends ScreenAdapter {
         this.setFont();
     }
 
+    // Set font method updates the screen font style
     private void setFont() {
         this.fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         this.fontParameter.size = 100;
@@ -45,6 +49,7 @@ public class GameOver extends ScreenAdapter {
 
     }
 
+    // Render method displays the screen
     @Override
     public void render(float delta) {
         // Clear the screen
@@ -53,19 +58,22 @@ public class GameOver extends ScreenAdapter {
 
         // Create batch and draw to it
         game.batch.begin();
-        game.batch.draw(gameOverBackground, 0, 0, game.widthScreen, game.heightScreen);
+        game.batch.draw(gameOverBackground, 0, 0, game.widthScreen, game.heightScreen); // Draw background
 
+        // Create variable offsets
         int backButtonVerticalOffset = 25;
         int backButtonHorizontalOffset = 25;
-
         int verticalButtonHitboxOffset = game.heightScreen - 25 - BACK_BUTTON_HEIGHT;
 
         // Get the mouse X and Y coordinates
         int mouseX = Gdx.input.getX();
         int mouseY = Gdx.input.getY();
 
+        // Back button collision
         if ((mouseX > backButtonHorizontalOffset) && (mouseX < backButtonHorizontalOffset + BACK_BUTTON_WIDTH) && (mouseY > verticalButtonHitboxOffset) && (mouseY < verticalButtonHitboxOffset + BACK_BUTTON_HEIGHT)) {
+            // if mouse is within button, display yellow
             game.batch.draw(backButtonActive, backButtonHorizontalOffset, backButtonVerticalOffset, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
+            // If the button is clicked, set menu screen
             if (Gdx.input.isTouched()) {
                 game.audio.stopMusic(game.currentScreen);
                 game.currentScreen = "Menu Screen";
@@ -73,13 +81,14 @@ public class GameOver extends ScreenAdapter {
                 game.setScreen(new MenuScreen(game));
             }
         } else {
+            // If not within back button, draw grey button
             game.batch.draw(backButtonInactive, backButtonHorizontalOffset, backButtonVerticalOffset, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
         }
 
-        game.font.draw(game.batch, String.valueOf(game.levelNum), 925, 425);
-        game.font.draw(game.batch, String.valueOf(game.currentScore), 925, 325);
-        game.font.draw(game.batch, String.valueOf(game.highScore + 1), 925, 225);
-        game.batch.end();
+        game.font.draw(game.batch, String.valueOf(game.levelNum), 925, 425); // Draw level number
+        game.font.draw(game.batch, String.valueOf(game.currentScore), 925, 325); // Draw current score
+        game.font.draw(game.batch, String.valueOf(game.highScore + 1), 925, 225); // Draw highscore
+        game.batch.end(); // End batch
     }
 
     @Override

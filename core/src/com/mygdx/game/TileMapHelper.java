@@ -26,7 +26,6 @@ public class TileMapHelper {
     private final short BIT_TRIANGLE = 4;
     private final short BIT_GROUND = 8;
     private final short BIT_SUPPORT = 16;
-
     private Boot game;
 
 
@@ -53,15 +52,19 @@ public class TileMapHelper {
 
     // This method is used to parse object from the tiled map and set player object
     private void parseMapObjects(MapObjects mapObjects) {
+        // Parse all objects
         for (MapObject mapObject : mapObjects) {
+            // If the object is a polygon map object create a static body
             if (mapObject instanceof PolygonMapObject) {
                 createStaticBody((PolygonMapObject) mapObject);
             }
 
+            // If it is a rectangle map object, create a rectangle object
             if (mapObject instanceof RectangleMapObject) {
                 Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
                 String rectangleName = mapObject.getName();
 
+                // If the rectangle object has the player name then create new player object
                 if (rectangleName.equals("player")) {
                     Body body = BodyHelperService.createBody(
                             rectangle.getX() + rectangle.getWidth() / 2,
@@ -79,16 +82,19 @@ public class TileMapHelper {
 
     // Create a body for each object in map
     private void createStaticBody(PolygonMapObject polygonMapObject) {
+        // Create new body def
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = gameScreen.getWorld().createBody(bodyDef);
         Shape shape = createPolygonShape(polygonMapObject);
 
+        // Create fixture def and get body name
         String name = polygonMapObject.getName();
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 1000f;
 
+        // As long as the name is not null adjust category bits and mask bits for contact detection
         if (name != null) {
             switch (name) {
                 case "triangle":
@@ -109,8 +115,8 @@ public class TileMapHelper {
                     break;
             }
         }
-        body.createFixture(fixtureDef);
-        shape.dispose();
+        body.createFixture(fixtureDef); // Create fixture
+        shape.dispose(); // Dispose
     }
 
     // Create player object with polygon shape and return shape

@@ -42,12 +42,18 @@ public class Boot extends Game {
 	// Create method used to populate Instance with data
 	@Override
 	public void create() {
+		// Create screen dimensions
 		this.widthScreen = 1280;
 		this.heightScreen = 720;
+		// Create camera and set dimensions
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false,  widthScreen, heightScreen);
-		this.levelNum = 3;
+
+		// Create level number and currents score
+		this.levelNum = 1;
 		this.currentScore = 0;
+
+		// Get past game data
 		this.data = new int[4];
 		try {
 			this.data = this.getData();
@@ -59,12 +65,21 @@ public class Boot extends Game {
 		this.wealth = this.data[1];
 		this.purchased6 = this.data[2] == 1;
 		this.purchased9 = this.data[3] == 1;
+
+		// Create new sprite batch
 		this.batch = new SpriteBatch();
+		// Create new font
 		this.fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/impact.ttf"));
+
+		// Set screen to menu screen
 		this.setScreen(new MenuScreen(this));
 		this.currentScreen = "Menu Screen";
+
+		// Play screen audio
 		this.audio = new AudioManager(this);
 		this.audio.playMusic(this.currentScreen);
+
+		// Load player skins and set current
 		this.playerSkin1 = new Sprite(new Texture("Skins/Character 1.png"));
 		this.playerSkin2 = new Sprite(new Texture("Skins/Character 2.png"));
 		this.playerSkin3 = new Sprite(new Texture("Skins/Character 3.png"));
@@ -72,6 +87,7 @@ public class Boot extends Game {
 		this.playerSkin = this.playerSkin1;
 	}
 
+	// Reset method used after level has been completed, resets all variables necessary to start another level.
 	public void reset() {
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false,  widthScreen, heightScreen);
@@ -80,6 +96,7 @@ public class Boot extends Game {
 		this.audio.playMusic(this.currentScreen);
 	}
 
+	// Set skin method, sets players skin
 	public void setSkin(int skinID) {
 		this.playerSkinID = skinID;
 		if (skinID == 1) {
@@ -97,6 +114,8 @@ public class Boot extends Game {
 		super.render();
 	}
 
+	// Get data method parses text file in assets directory and gets past game data.
+	//	If the data does not exist, the game will create a new directory and populate default data
 	public int[] getData() throws IOException {
 		File gameData = new File(this.filePath);
 		if (gameData.exists()) {
@@ -118,6 +137,8 @@ public class Boot extends Game {
 		return this.data;
 	}
 
+	// Store data method will overwrite historical data with most recent data
+	//	This is called whenever the application is closed
 	public void storeData() throws IOException {
 		FileWriter myWriter = new FileWriter(this.filePath);
 		myWriter.write("Player Highscore: " + this.highScore + "\n");
@@ -127,6 +148,8 @@ public class Boot extends Game {
 		myWriter.close();
 	}
 
+	// Dispose method disposes of audio and stores historical data
+	//	This is also called on game quit
 	public void dispose() {
 		this.audio.dispose();
 		try {

@@ -84,13 +84,7 @@ public class MenuScreen implements Screen {
         if ((mouseX > xButtonOffset) && (mouseX < (xButtonOffset + BUTTON_WIDTH)) && (mouseY > yPlayButtonOffset) && (mouseY < (yPlayButtonOffset + BUTTON_HEIGHT))) {
             this.game.batch.draw(playButtonActive, xButtonOffset, playButtonY, BUTTON_WIDTH, BUTTON_HEIGHT);
             // If the button is clicked, start the game
-            if (Gdx.input.isTouched()) {
-                // Add delay so no double click
-                long startTime = System.currentTimeMillis();
-                long time = 0;
-                while(time < startTime + 50) {
-                    time = System.currentTimeMillis();
-                }
+            if (Gdx.input.justTouched()) {
                 this.game.setScreen(new LevelMenu(this.game));
             }
 
